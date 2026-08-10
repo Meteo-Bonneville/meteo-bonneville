@@ -1,16 +1,53 @@
-## Hi there 👋
 
-<!--
-**Meteo-Bonneville/meteo-bonneville** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+# 🌦️ Station météo de Bonneville (Haute-Savoie)
 
-Here are some ideas to get you started:
+Bienvenue sur le site officiel de ma station météo amateur installée à Bonneville (74130).
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+---
+
+## 📡 Données météo en direct
+
+🚧 Cette partie sera bientôt alimentée automatiquement par le Raspberry Pi.
+
+Les informations disponibles seront :
+
+- 🌡️ Température
+- 💧 Humidité
+- 🌬️ Vent
+- 🌧️ Pluie
+- ☀️ Rayonnement solaire
+- 🟣 Indice UV
+- 🌍 Pression atmosphérique
+- 🌡️ WBGT (Température au globe)
+
+---
+
+## 🌐 Mes réseaux météo
+
+- ✅ Weather Underground
+- ✅ Windy
+- ✅ WeatherCloud
+- ✅ PWSWeather
+- ✅ ProWeatherLive
+- ✅ CWOP
+- ✅ InfoClimat (Station amateur)
+
+---
+
+## 📍 Localisation
+
+Bonneville (Haute-Savoie - France)
+
+Altitude : 471 m
+
+---
+
+## 🚧 Site en cours de construction
+
+De nouvelles fonctionnalités arrivent prochainement :
+- Cartes météo
+- Graphiques
+- Historique des relevés
+- Statistiques
+- Webcam (si installée)
+- Prévisions locales
