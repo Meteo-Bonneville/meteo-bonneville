@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Station météo de Bonneville</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#0d1117;
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+header{
+    background:linear-gradient(90deg,#1565C0,#1976D2,#42A5F5);
+    padding:35px;
+    text-align:center;
+}
+
+h1{
+    margin:0;
+    font-size:42px;
+}
+
+h2{
+    color:#4FC3F7;
+}
+
+section{
+    max-width:1100px;
+    margin:auto;
+    padding:25px;
+}
+
+.carte{
+    background:#161B22;
+    border-radius:15px;
+    padding:20px;
+    margin-bottom:25px;
+    box-shadow:0 0 15px rgba(0,0,0,0.35);
+}
+
+.grille{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.valeur{
+    background:#21262D;
+    border-radius:12px;
+    padding:18px;
+    text-align:center;
+}
+
+.valeur h3{
+    margin-top:0;
+    color:#4FC3F7;
+}
+
+.nombre{
+    font-size:34px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+footer{
+    text-align:center;
+    padding:25px;
+    color:#AAAAAA;
+    font-size:14px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>🌦️ Station météo de Bonneville</h1>
+    <p>Haute-Savoie (74130)</p>
+</header>
+
+<section>
+
+<div class="carte">
+<h2>📡 Données météo en direct</h2>
+
+<div class="grille">
+
+<div class="valeur">
+<h3>🌡️ Température</h3>
+<div class="nombre">-- °C</div>
+</div>
+
+<div class="valeur">
+<h3>💧 Humidité</h3>
+<div class="nombre">-- %</div>
+</div>
+
+<div class="valeur">
+<h3>🌬️ Vent</h3>
+<div class="nombre">-- km/h</div>
+</div>
+
+<div class="valeur">
+<h3>🌧️ Pluie</h3>
+<div class="nombre">-- mm</div>
+</div>
+
+<div class="valeur">
+<h3>☀️ Rayonnement</h3>
+<div class="nombre">-- W/m²</div>
+</div>
+
+<div class="valeur">
+<h3>🔵 Pression</h3>
+<div class="nombre">-- hPa</div>
+</div>
+
+</div>
+
+</div>
+<div class="carte">
+
+<h2>🌐 Réseaux météo</h2>
+
+<div class="grille">
+
+<div class="valeur">
+<h3>🌍 Weather Underground</h3>
+<p>🟢 Connecté</p>
+</div>
+
+<div class="valeur">
+<h3>💨 Windy</h3>
+<p>🟢 Connecté</p>
+</div>
+
+<div class="valeur">
+<h3>☁️ WeatherCloud</h3>
+<p>🟢 Connecté</p>
+</div>
+
+<div class="valeur">
+<h3>📡 ProWeatherLive</h3>
+<p>🟢 Connecté</p>
+</div>
+
+<div class="valeur">
+<h3>📈 PWSWeather</h3>
+<p>🟢 Connecté</p>
+</div>
+
+<div class="valeur">
+<h3>🌦️ InfoClimat</h3>
+<p>🟢 Station amateur</p>
+</div>
+
+</div>
+
+</div>
+<div class="carte">
+
+<h2>🗺️ Cartes météo</h2>
+
+<div class="grille">
+
+<div class="valeur">
+<h3>🌧️ Radar pluie</h3>
+<p>À intégrer</p>
+</div>
+
+<div class="valeur">
+<h3>⚡ Foudre</h3>
+<p>À intégrer</p>
+</div>
+
+<div class="valeur">
+<h3>🛰️ Satellite</h3>
+<p>À intégrer</p>
+</div>
+
+<div class="valeur">
+<h3>🌡️ Températures</h3>
+<p>À intégrer</p>
+</div>
+
+<div class="valeur">
+<h3>💨 Vent</h3>
+<p>À intégrer</p>
+</div>
+
+<div class="valeur">
+<h3>🌦️ Prévisions</h3>
+<p>À intégrer</p>
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+<p>Station météo de Bonneville - Haute-Savoie (74130)</p>
+
+<p>Site en cours de construction - Données bientôt synchronisées avec le Raspberry Pi.</p>
+
+</footer>
+
+</section>
+
+</body>
+
+</html>
