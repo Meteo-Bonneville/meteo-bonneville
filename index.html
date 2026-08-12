@@ -96,32 +96,32 @@ footer{
 
 <div class="valeur">
 <h3>🌡️ Température</h3>
-<div class="nombre">-- °C</div>
+<div class="nombre" id="temperature">-- °C</div>
 </div>
 
 <div class="valeur">
 <h3>💧 Humidité</h3>
-<div class="nombre">-- %</div>
+<div class="nombre" id="humidite">-- %</div>
 </div>
 
 <div class="valeur">
 <h3>🌬️ Vent</h3>
-<div class="nombre">-- km/h</div>
+<div class="nombre" id="vent">-- km/h</div>
 </div>
 
 <div class="valeur">
 <h3>🌧️ Pluie</h3>
-<div class="nombre">-- mm</div>
+<div class="nombre" id="pluie">-- mm</div>
 </div>
 
 <div class="valeur">
 <h3>☀️ Rayonnement</h3>
-<div class="nombre">-- W/m²</div>
+<div class="nombre" id="rayonnement">-- W/m²</div>
 </div>
 
 <div class="valeur">
 <h3>🔵 Pression</h3>
-<div class="nombre">-- hPa</div>
+<div class="nombre" id="pression">-- hPa</div>
 </div>
 
 </div>
@@ -215,7 +215,26 @@ footer{
 </footer>
 
 </section>
+<script>
 
+async function majMeteo() {
+
+    const r = await fetch("observations.json?t=" + Date.now());
+    const d = await r.json();
+
+    document.getElementById("temperature").textContent = d.temperature + " °C";
+    document.getElementById("humidite").textContent = d.humidite + " %";
+    document.getElementById("vent").textContent = d.vent + " km/h";
+    document.getElementById("pluie").textContent = d.pluie_totale + " mm";
+    document.getElementById("rayonnement").textContent = d.rayonnement + " W/m²";
+    document.getElementById("pression").textContent = d.pression + " hPa";
+
+}
+
+majMeteo();
+setInterval(majMeteo, 60000);
+
+</script>
 </body>
 
 </html>
