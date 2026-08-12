@@ -120,6 +120,11 @@ footer{
 </div>
 
 <div class="valeur">
+<h3>☀️ Indice UV</h3>
+<div class="nombre" id="uv">--</div>
+</div>
+
+<div class="valeur">
 <h3>🔵 Pression</h3>
 <div class="nombre" id="pression">-- hPa</div>
 </div>
@@ -227,6 +232,7 @@ async function majMeteo() {
     document.getElementById("vent").textContent = d.vent + " km/h";
     document.getElementById("pluie").textContent = d.pluie_totale + " mm";
     document.getElementById("rayonnement").textContent = d.rayonnement + " W/m²";
+    document.getElementById("uv").textContent = d.uv
     document.getElementById("pression").textContent = d.pression + " hPa";
 
 }
