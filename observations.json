@@ -1,14 +1,14 @@
 {
-    "date": "2026-08-13 07:39:49",
-    "temperature": 19.8,
-    "humidite": 88.5,
+    "date": "2026-08-13 07:59:50",
+    "temperature": 20.8,
+    "humidite": 84.9,
     "pression": 1033.5,
-    "vent": 0.0,
-    "rafale": 0.0,
-    "direction": 222,
-    "point_rosee": 17.7,
+    "vent": 0.2,
+    "rafale": 0.2,
+    "direction": 251,
+    "point_rosee": 18.1,
     "pluie_h": 0.0,
     "pluie_totale": 0.0,
     "uv": 0,
-    "rayonnement": 54.8
+    "rayonnement": 83.7
 }
