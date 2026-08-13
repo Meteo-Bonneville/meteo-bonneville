@@ -217,6 +217,8 @@ footer{
 
 <p>Site en cours de construction - Données bientôt synchronisées avec le Raspberry Pi.</p>
 
+<p>🕒 Dernière mise à jour : <span id="date">--</span></p>
+
 </footer>
 
 </section>
@@ -226,6 +228,8 @@ async function majMeteo() {
 
     const r = await fetch("observations.json?t=" + Date.now());
     const d = await r.json();
+
+    document.getElementById("date").textContent = d.date;
 
     document.getElementById("temperature").textContent = d.temperature + " °C";
     document.getElementById("humidite").textContent = d.humidite + " %";
