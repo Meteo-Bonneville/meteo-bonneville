@@ -137,17 +137,20 @@ footer{
 <div class="valeur">
     <h3>🌡️ Température max</h3>
     <div class="nombre" id="temp_max_jour">-- °C</div>
+    <div class="heure" id="heure_temp_max">à --:--</div>
 </div>
 
 <div class="valeur">
     <h3>❄️ Température min</h3>
     <div class="nombre" id="temp_min_jour">-- °C</div>
+    <div class="heure" id="heure_temp_min">à --:--</div>
 </div>
 
 <div class="valeur">
 <h3>💨 Rafale</h3>
 <div class="nombre" id="rafale">-- km/h</div>
 <div class="nombre" id="rafale_max_jour">-- km/h</div>
+<div class="heure" id="heure_rafale_max">à --:--</div>
 </div>
 
 <h2>🌐 Réseaux météo</h2>
@@ -246,6 +249,9 @@ async function majMeteo() {
 
     document.getElementById("temperature").textContent = d.temperature + " °C";
     document.getElementById("temp_max_jour").textContent = d.temp_max_jour + " °C";
+    document.getElementById("heure_temp_max").textContent = "à " + d.heure_temp_max;
+    document.getElementById("heure_temp_min").textContent = "à " + d.heure_temp_min;
+    document.getElementById("heure_rafale_max").textContent = "à " + d.heure_rafale_max;
     document.getElementById("temp_min_jour").textContent = d.temp_min_jour + " °C";
     document.getElementById("humidite").textContent = d.humidite + " %";
     document.getElementById("vent").textContent = d.vent + " km/h";
