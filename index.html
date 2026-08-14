@@ -154,17 +154,18 @@ footer{
 </div>
 
 <div class="carte">
-    <h2>⚠️ Vigilance météo</h2>
-
-    <div class="valeur">
-        <h3>Haute-Savoie (74)</h3>
-        <p>Consulter les alertes météo en cours</p>
-        <p>
-            <a href="https://vigilance.meteofrance.fr/fr" target="_blank">
-                🗺️ Voir la carte de vigilance France
-            </a>
-        </p>
-    </div>
+  <h2>⚠️ Vigilance météo</h2>
+  <div class="valeur">
+    <h3>Haute-Savoie (74)</h3>
+    <p id="vigilance-meteo">
+  Chargement de la vigilance...
+</p>
+    <p>
+      <a href="https://vigilance.meteofrance.fr/fr/haute-savoie" target="_blank">
+        ⚠️ Détails de la vigilance
+      </a>
+    </p>
+  </div>
 </div>
 
 <div class="carte">
@@ -182,17 +183,20 @@ footer{
 </div>
 
 <div class="carte">
-    <h2>🌊 Vigicrues</h2>
+  <h2>🌊 Vigicrues</h2>
+  <div class="valeur">
+    <h3>Arve aval / Bonneville</h3>
 
-    <div class="valeur">
-        <h3>Vigilance crues</h3>
-        <p>Consulter la surveillance des cours d'eau</p>
-        <p>
-            <a href="https://www.vigicrues.gouv.fr/" target="_blank">
-                🌊 Voir la carte Vigicrues
-            </a>
-        </p>
-    </div>
+    <p id="vigilance-crues">
+      🟢 Vigilance verte
+    </p>
+
+    <p>
+      <a href="https://www.vigicrues.gouv.fr/territoire/19" target="_blank">
+        🌊 Détails Vigicrues
+      </a>
+    </p>
+  </div>
 </div>
 
 <h2>🌐 Réseaux météo</h2>
@@ -310,6 +314,44 @@ majMeteo();
 setInterval(majMeteo, 60000);
 
 </script>
+<script>
+async function mettreAJourVigicrues() {
+  try {
+    const reponse = await fetch("vigilance.json?t=" + Date.now());
+    const data = await reponse.json();
+
+    const element = document.getElementById("vigilance-crues");
+
+    if (element && data.vigicrues) {
+      element.textContent =
+        data.vigicrues.symbole + " " + data.vigicrues.texte;
+    }
+  } catch (erreur) {
+    console.error("Erreur Vigicrues :", erreur);
+  }
+}
+
+async function mettreAJourMeteo() {
+  try {
+    const reponse = await fetch("vigilance.json?t=" + Date.now());
+    const data = await reponse.json();
+
+    const element = document.getElementById("vigilance-meteo");
+
+    if (element && data.meteo && data.meteo.alertes) {
+      element.innerHTML = data.meteo.alertes.join("<br>");
+    }
+  } catch (erreur) {
+    console.error("Erreur vigilance météo :", erreur);
+  }
+}
+
+mettreAJourVigicrues();
+mettreAJourMeteo();
+setInterval(mettreAJourVigicrues, 300000);
+setInterval(mettreAJourMeteo, 300000);
+</script>
+
 </body>
 
 </html>
