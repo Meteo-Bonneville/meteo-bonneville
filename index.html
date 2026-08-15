@@ -207,7 +207,12 @@ menu-deroulant{
 </details>
 
 <div id="vigilance" class="bloc-menu" style="display:none;">
-<div class="carte">
+<div class="sous-menu">
+  <button onclick="afficherVigilance('meteo')">🌦️ Vigilance météo</button>
+  <button onclick="afficherVigilance('foret')">🔥 Feux de forêt</button>
+  <button onclick="afficherVigilance('crues')">🌊 Vigicrues</button>
+</div>
+<div id="vigilance-meteo-bloc" class="carte" style="display:none;">
   <h2>⚠️ Vigilance météo</h2>
   <div class="valeur">
     <h3>Haute-Savoie (74)</h3>
@@ -222,7 +227,7 @@ menu-deroulant{
   </div>
 </div>
 
-<div class="carte">
+<div id="vigilance-foret-bloc" class="carte" style="display:none;">
     <h2>🔥 Feux de forêt</h2>
 
     <div class="valeur">
@@ -236,7 +241,7 @@ menu-deroulant{
     </div>
 </div>
 
-<div class="carte">
+<div id="vigilance-crues-bloc" class="carte" style="display:none;">
   <h2>🌊 Vigicrues</h2>
   <div class="valeur">
     <h3>Arve aval / Bonneville</h3>
@@ -380,7 +385,16 @@ function toggleVigilance() {
     bloc.style.display = "none";
   }
 }
+
+function afficherVigilance(type) {
+    document.getElementById("vigilance-meteo-bloc").style.display = "none";
+    document.getElementById("vigilance-foret-bloc").style.display = "none";
+    document.getElementById("vigilance-crues-bloc").style.display = "none";
+
+    document.getElementById("vigilance-" + type + "-bloc").style.display = "block";
+}
 async function mettreAJourMeteo() {
+
   try {
     const reponse = await fetch("vigilance.json?t=" + Date.now());
     const data = await reponse.json();
