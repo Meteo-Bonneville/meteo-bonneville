@@ -82,6 +82,22 @@ footer{
     color:#AAAAAA;
     font-size:14px;
 }
+
+menu-deroulant{
+  margin:20px 0;
+}
+
+.menu-deroulant summary{
+  background:#1565C0;
+  padding:16px 20px;
+  border-radius:12px;
+  font-size:22px;
+  font-weight:bold;
+  cursor:pointer;
+  list-style:none;
+  text-align:center;
+}
+
 </style>
 
 </head>
@@ -138,6 +154,9 @@ footer{
 </div>
 
 </div>
+<details class="menu-deroulant">
+<summary>🌡️ Mini / Maxi du jour</summary>
+
 <div class="carte">
 
 <div class="valeur">
@@ -158,6 +177,8 @@ footer{
 <div class="nombre" id="rafale_max_jour">-- km/h</div>
 <div class="heure" id="heure_rafale_max">à --:--</div>
 </div>
+
+</details>
 
 <div class="carte">
   <h2>⚠️ Vigilance météo</h2>
