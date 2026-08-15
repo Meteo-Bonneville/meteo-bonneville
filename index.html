@@ -127,7 +127,7 @@ menu-deroulant{
     <p>Haute-Savoie (74130)</p>
 </header>
 <nav class="menu-principal">
-  <a href="#vigilance">⚠️ Vigilances <span id="pastille-vigilance">●</span></a>
+  <a href="#" onclick="toggleVigilance(); return false;">⚠️ Vigilances <span id="pastille-vigilance">
   <a href="#cartes">🗺️ Cartes météo</a>
   <a href="#air">🌬️ Qualité de l'air</a>
   <a href="#previsions">📅 Prévisions</a>
@@ -206,7 +206,7 @@ menu-deroulant{
 
 </details>
 
-<div id="vigilance" class="bloc-menu">
+<div id="vigilance" class="bloc-menu" style="display:none;">
 <div class="carte">
   <h2>⚠️ Vigilance météo</h2>
   <div class="valeur">
@@ -370,6 +370,16 @@ async function mettreAJourVigicrues() {
   }
 }
 
+function toggleVigilance() {
+  const bloc = document.getElementById("vigilance");
+
+  if (bloc.style.display === "none") {
+    bloc.style.display = "block";
+    bloc.scrollIntoView({ behavior: "smooth" });
+  } else {
+    bloc.style.display = "none";
+  }
+}
 async function mettreAJourMeteo() {
   try {
     const reponse = await fetch("vigilance.json?t=" + Date.now());
