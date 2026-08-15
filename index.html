@@ -98,6 +98,24 @@ menu-deroulant{
   text-align:center;
 }
 
+.menu-principal {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.menu-principal a {
+  background: #1f2933;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: #4fc3f7;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+
 </style>
 
 </head>
@@ -108,7 +126,13 @@ menu-deroulant{
     <h1>🌦️ Station météo de Bonneville</h1>
     <p>Haute-Savoie (74130)</p>
 </header>
-
+<nav class="menu-principal">
+  <a href="#vigilance">⚠️ Vigilances <span id="pastille-vigilance">●</span></a>
+  <a href="#cartes">🗺️ Cartes météo</a>
+  <a href="#air">🌬️ Qualité de l'air</a>
+  <a href="#previsions">📅 Prévisions</a>
+  <a href="#graphiques">📊 Graphiques</a>
+</nav>
 <section>
 
 <div class="carte">
