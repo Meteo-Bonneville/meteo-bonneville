@@ -373,6 +373,18 @@ async function mettreAJourMeteo() {
   try {
     const reponse = await fetch("vigilance.json?t=" + Date.now());
     const data = await reponse.json();
+    const pastille = document.getElementById("pastille-vigilance");
+    const niveaux = [
+  ...(data.meteo?.alertes || []),
+  data.vigicrues?.texte || ""
+].join(" ").toLowerCase();
+
+if (pastille) {
+  if (niveaux.includes("rouge")) pastille.textContent = "🔴";
+  else if (niveaux.includes("orange")) pastille.textContent = "🟠";
+  else if (niveaux.includes("jaune")) pastille.textContent = "🟡";
+  else pastille.textContent = "🟢";
+}
 
     const element = document.getElementById("vigilance-meteo");
 
