@@ -149,6 +149,7 @@ menu-deroulant{
   <a href="#contact">✉️ Contact</a>
   <a href="#photos">📸 Photos</a>
 </nav>
+<div id="affichage-vigilance"></div>
 <section>
 
 <div class="carte">
@@ -395,11 +396,13 @@ function toggleVigilance() {
 }
 
 function afficherVigilance(type) {
-    document.getElementById("vigilance").style.display = "block";
+    document.getElementById("affichage-vigilance").style.display = "block";
+    const zone = document.getElementById("affichage-vigilance");
 
     document.getElementById("vigilance-meteo-bloc").style.display = "none";
     document.getElementById("vigilance-foret-bloc").style.display = "none";
     document.getElementById("vigilance-crues-bloc").style.display = "none";
+    zone.appendChild(document.getElementById("vigilance-" + type + "-bloc"));
 
     document.getElementById("vigilance-" + type + "-bloc").style.display = "block";
 }
