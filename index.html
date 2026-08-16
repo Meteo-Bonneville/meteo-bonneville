@@ -142,7 +142,13 @@ menu-deroulant{
   <button onclick="afficherVigilance('crues')">🌊 Vigicrues</button>
 </div>
 
-  <a href="#cartes">🗺️ Cartes météo</a>
+  <a href="#" onclick="toggleCartes(); return false;">🗺️ Cartes météo</a>
+<div id="sous-menu-cartes" class="sous-menu" style="display:none;">
+  <button onclick="afficherCarte('radar')">🌧️ Radar pluie</button>
+  <button onclick="afficherCarte('foudre')">⚡ Foudre</button>
+  <button onclick="afficherCarte('satellite')">🛰️ Satellite</button>
+  <button onclick="afficherCarte('temperature')">🌡️ Températures</button>
+</div>
   <a href="#air">🌬️ Qualité de l'air</a>
   <a href="#previsions">📅 Prévisions</a>
   <a href="#graphiques">📊 Graphiques</a>
@@ -150,6 +156,7 @@ menu-deroulant{
   <a href="#photos">📸 Photos</a>
 </nav>
 <div id="affichage-vigilance"></div>
+<div id="affichage-cartes"></div>
 <section>
 
 <div class="carte">
@@ -271,13 +278,13 @@ menu-deroulant{
 </div>
 
 </div>
-<div class="carte">
+<div id="cartes-source" class="carte" style="display:none;">
 
 <h2>🗺️ Cartes météo</h2>
 
 <div class="grille">
 
-<div class="valeur">
+<div id="carte-radar-bloc" class="valeur">
 <h3>🌧️ Radar pluie</h3>
 <p>
 <a href="https://www.meteociel.fr/observations-meteo/radar2.php?region=se&amp;&amp;mode=1" target="_blank">🌧️ Région</a><br>
@@ -285,7 +292,7 @@ menu-deroulant{
 </p>
 </div>
 
-<div class="valeur">
+<div id="carte-foudre-bloc" class="valeur">
 <h3>⚡ Foudre</h3>
 <p>
 <a href="https://www.meteociel.fr/observations-meteo/foudre-direct.php?x=25694.34&amp;y=28434.77&amp;zoom=4.7" target="_blank">⚡ Région</a><br>
@@ -293,7 +300,7 @@ menu-deroulant{
 </p>
 </div>
 
-<div class="valeur">
+<div id="carte-satellite-bloc" class="valeur">
 <h3>🛰️ Satellite</h3>
 <p>
 <a href="https://www.meteociel.fr/observations-meteo/satellite.php?mode=animation-infrarouge-colorise-hd-mtg" target="_blank">
@@ -302,7 +309,7 @@ menu-deroulant{
 </p>
 </div>
 
-<div class="valeur">
+<div id="carte-temperature-bloc" class="valeur">
 <h3>🌡️ Températures</h3>
 <p>
 <a href="https://www.meteociel.fr/observations-meteo/temperatures.php?region=r11" target="_blank">
@@ -383,6 +390,36 @@ async function mettreAJourVigicrues() {
   } catch (erreur) {
     console.error("Erreur Vigicrues :", erreur);
   }
+}
+
+function toggleCartes() {
+  const bloc = document.getElementById("sous-menu-cartes");
+
+  if (bloc.style.display === "none") {
+    bloc.style.display = "block";
+  } else {
+    bloc.style.display = "none";
+    document.getElementById("affichage-cartes").style.display = "none";
+  }
+}
+function afficherCarte(type) {
+  const zone = document.getElementById("affichage-cartes");
+  const bloc = document.getElementById("carte-" + type + "-bloc");
+  const dejaOuvert = bloc.style.display === "block";
+
+  document.getElementById("carte-radar-bloc").style.display = "none";
+  document.getElementById("carte-foudre-bloc").style.display = "none";
+  document.getElementById("carte-satellite-bloc").style.display = "none";
+  document.getElementById("carte-temperature-bloc").style.display = "none";
+
+  if (dejaOuvert) {
+    zone.style.display = "none";
+    return;
+  }
+
+  zone.style.display = "block";
+  zone.appendChild(bloc);
+  bloc.style.display = "block";
 }
 
 function toggleVigilance() {
