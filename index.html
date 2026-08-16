@@ -392,20 +392,29 @@ function toggleVigilance() {
     bloc.style.display = "block";
   } else {
     bloc.style.display = "none";
+    document.getElementById("affichage-vigilance").style.display = "none";
   }
 }
 
 function afficherVigilance(type) {
-    document.getElementById("affichage-vigilance").style.display = "block";
     const zone = document.getElementById("affichage-vigilance");
+    const bloc = document.getElementById("vigilance-" + type + "-bloc");
+    const dejaOuvert = bloc.style.display === "block";
 
     document.getElementById("vigilance-meteo-bloc").style.display = "none";
     document.getElementById("vigilance-foret-bloc").style.display = "none";
     document.getElementById("vigilance-crues-bloc").style.display = "none";
-    zone.appendChild(document.getElementById("vigilance-" + type + "-bloc"));
 
-    document.getElementById("vigilance-" + type + "-bloc").style.display = "block";
+    if (dejaOuvert) {
+        zone.style.display = "none";
+        return;
+    }
+
+    zone.style.display = "block";
+    zone.appendChild(bloc);
+    bloc.style.display = "block";
 }
+
 async function mettreAJourMeteo() {
 
   try {
