@@ -162,10 +162,11 @@ menu-deroulant{
   <a href="#contact">✉️ Contact</a>
   <a href="#photos">📸 Photos</a>
 </nav>
-  <div id="sous-menu-air" class="sous-menu" style="display:none; width:100%; flex-basis:100%;">
+  <div id="sous-menu-air" class="sous-menu" style="display:none; width:max-content; max-width:90%;">
   <div id="air-contenu">
     🌿 Qualité de l'air : chargement...
   </div>
+</div>
 
 <div id="affichage-vigilance"></div>
 <div id="affichage-cartes"></div>
@@ -437,6 +438,10 @@ function toggleAir() {
 
     if (doitOuvrir) {
         air.style.display = "block";
+        const boutonAir = document.querySelector('a[onclick*="toggleAir"]');
+        const parentRect = air.parentElement.getBoundingClientRect();
+        const boutonRect = boutonAir.getBoundingClientRect();
+        air.style.marginLeft = Math.max(0, boutonRect.left - parentRect.left) + "px";
         chargerAir();
     } else {
         air.style.display = "none";
