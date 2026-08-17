@@ -399,19 +399,25 @@ async function mettreAJourVigicrues() {
 }
 
 function toggleCartes(element) {
-  const bloc = document.getElementById("sous-menu-cartes");
-  bloc.style.left = element.offsetLeft + "px";
+    const cartes = document.getElementById("sous-menu-cartes");
+    const vigilance = document.getElementById("sous-menu-vigilance");
+    const doitOuvrir = cartes.style.display !== "block";
 
-  document.getElementById("sous-menu-vigilance").style.display = "none";
-  document.getElementById("affichage-vigilance").style.display = "none";
+    vigilance.style.display = "none";
+    document.getElementById("affichage-vigilance").style.display = "none";
 
-  if (bloc.style.display === "none") {
-    bloc.style.display = "block";
-  } else {
-    bloc.style.display = "none";
-    document.getElementById("affichage-cartes").style.display = "none";
-  }
+    if (doitOuvrir) {
+        const rect = element.getBoundingClientRect();
+        const menuRect = document.querySelector(".menu-principal").getBoundingClientRect();
+
+        cartes.style.left = (rect.left - menuRect.left) + "px";
+        cartes.style.display = "block";
+    } else {
+        cartes.style.display = "none";
+        document.getElementById("affichage-cartes").style.display = "none";
+    }
 }
+
 function afficherCarte(type) {
   const zone = document.getElementById("affichage-cartes");
   const bloc = document.getElementById("carte-" + type + "-bloc");
@@ -433,17 +439,19 @@ function afficherCarte(type) {
 }
 
 function toggleVigilance() {
-  const bloc = document.getElementById("sous-menu-vigilance");
+    const vigilance = document.getElementById("sous-menu-vigilance");
+    const cartes = document.getElementById("sous-menu-cartes");
+    const doitOuvrir = vigilance.style.display !== "block";
 
-  document.getElementById("sous-menu-cartes").style.display = "none";
-  document.getElementById("affichage-cartes").style.display = "none";
+    cartes.style.display = "none";
+    document.getElementById("affichage-cartes").style.display = "none";
 
-  if (bloc.style.display === "none") {
-    bloc.style.display = "block";
-  } else {
-    bloc.style.display = "none";
-    document.getElementById("affichage-vigilance").style.display = "none";
-  }
+    if (doitOuvrir) {
+        vigilance.style.display = "block";
+    } else {
+        vigilance.style.display = "none";
+        document.getElementById("affichage-vigilance").style.display = "none";
+    }
 }
 
 function afficherVigilance(type) {
