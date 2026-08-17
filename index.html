@@ -114,6 +114,12 @@ menu-deroulant{
     z-index: 1000;
 }
 
+#sous-menu-cartes {
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+}
+
 .menu-principal a {
   background: #1f2933;
   padding: 8px 12px;
@@ -142,7 +148,7 @@ menu-deroulant{
   <button onclick="afficherVigilance('crues')">🌊 Vigicrues</button>
 </div>
 
-  <a href="#" onclick="toggleCartes(); return false;">🗺️ Cartes météo</a>
+  <a href="#"onclick="toggleCartes(this); return false;"🗺️ Cartes météo</a>
 <div id="sous-menu-cartes" class="sous-menu" style="display:none;">
   <button onclick="afficherCarte('radar')">🌧️ Radar pluie</button>
   <button onclick="afficherCarte('foudre')">⚡ Foudre</button>
@@ -392,8 +398,12 @@ async function mettreAJourVigicrues() {
   }
 }
 
-function toggleCartes() {
+function toggleCartes(element) {
   const bloc = document.getElementById("sous-menu-cartes");
+  bloc.style.left = element.offsetLeft + "px";
+
+  document.getElementById("sous-menu-vigilance").style.display = "none";
+  document.getElementById("affichage-vigilance").style.display = "none";
 
   if (bloc.style.display === "none") {
     bloc.style.display = "block";
@@ -425,6 +435,9 @@ function afficherCarte(type) {
 function toggleVigilance() {
   const bloc = document.getElementById("sous-menu-vigilance");
 
+  document.getElementById("sous-menu-cartes").style.display = "none";
+  document.getElementById("affichage-cartes").style.display = "none";
+
   if (bloc.style.display === "none") {
     bloc.style.display = "block";
   } else {
@@ -435,6 +448,9 @@ function toggleVigilance() {
 
 function afficherVigilance(type) {
     const zone = document.getElementById("affichage-vigilance");
+
+    document.getElementById("sous-menu-vigilance").style.display = "none";
+    document.getElementById("affichage-vigilance").style.display = "none";
     const bloc = document.getElementById("vigilance-" + type + "-bloc");
     const dejaOuvert = bloc.style.display === "block";
 
