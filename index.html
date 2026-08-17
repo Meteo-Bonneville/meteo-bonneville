@@ -488,10 +488,16 @@ async function mettreAJourMeteo() {
 ].join(" ").toLowerCase();
 
 if (pastille) {
-  if (niveaux.includes("rouge")) pastille.textContent = "🔴";
-  else if (niveaux.includes("orange")) pastille.textContent = "🟠";
-  else if (niveaux.includes("jaune")) pastille.textContent = "🟡";
-  else pastille.textContent = "🟢";
+if (niveaux.includes("rouge")) pastille.style.backgroundColor = "#ff0000";
+else if (niveaux.includes("orange")) pastille.style.backgroundColor = "#ff8c00";
+else if (niveaux.includes("jaune")) pastille.style.backgroundColor = "#ffeb00";
+else pastille.style.backgroundColor = "#00c853";
+
+pastille.textContent = "";
+pastille.style.display = "inline-block";
+pastille.style.width = "14px";
+pastille.style.height = "14px";
+pastille.style.borderRadius = "50%";
 }
 
     const element = document.getElementById("vigilance-meteo");
