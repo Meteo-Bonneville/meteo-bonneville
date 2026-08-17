@@ -155,7 +155,13 @@ menu-deroulant{
   <button onclick="afficherCarte('satellite')">🛰️ Satellite</button>
   <button onclick="afficherCarte('temperature')">🌡️ Températures</button>
 </div>
-  <a href="#air">🌬️ Qualité de l'air</a>
+  <a href="#" onclick="toggleAir(); return false;">🏭 Qualité de l'air</a>
+[17:46, 17/08/2026] Sylvain: <a href="#" onclick="toggleAir(); return false;">🏭 Qualité de l'air</a>
+[17:47, 17/08/2026] Sylvain: <div id="sous-menu-air" class="sous-menu" style="display:none;">
+  <div id="air-contenu">
+    🌿 Qualité de l'air : chargement...
+  </div>
+</div>
   <a href="#previsions">📅 Prévisions</a>
   <a href="#graphiques">📊 Graphiques</a>
   <a href="#contact">✉️ Contact</a>
@@ -416,6 +422,56 @@ function toggleCartes(element) {
         cartes.style.display = "none";
         document.getElementById("affichage-cartes").style.display = "none";
     }
+}
+
+function toggleAir() {
+    const air = document.getElementById("sous-menu-air");
+    const vigilance = document.getElementById("sous-menu-vigilance");
+    const cartes = document.getElementById("sous-menu-cartes");
+    const doitOuvrir = air.style.display !== "block";
+
+    vigilance.style.display = "none";
+    cartes.style.display = "none";
+    document.getElementById("affichage-vigilance").style.display = "none";
+    document.getElementById("affichage-cartes").style.display = "none";
+
+    if (doitOuvrir) {
+        air.style.display = "block";
+        chargerAir();
+    } else {
+        air.style.display = "none";
+
+    }
+}
+
+async function chargerAir() {
+    try {
+        const response = await fetch("air.json?t=" + Date.now());
+        const data = await response.json();
+
+        const zone = document.getElementById("air-contenu");
+let couleur = "#00c853";
+
+if (data.couleur === "jaune") couleur = "#ffeb00";
+else if (data.couleur === "orange") couleur = "#ff8c00";
+else if (data.couleur === "rouge") couleur = "#ff0000";
+else if (data.couleur === "violet") couleur = "#8e44ad";
+else if (data.couleur === "bordeaux") couleur = "#7e0023";
+
+let polluant = data.polluant;
+if (polluant === "p2") polluant = "PM2.5";
+zone.innerHTML = `
+    <strong>🌿 Qualité de l'air à ${data.ville}</strong><br>
+    <span style="font-size:28px; font-weight:bold; color:${couleur};">
+        AQI ${data.aqi}
+    </span><br>
+    <strong>${data.niveau}</strong><br>
+    Polluant principal : ${polluant}
+`;
+
+} catch (erreur) {
+    console.error("Erreur qualité de l'air :", erreur);
+}
 }
 
 function afficherCarte(type) {
