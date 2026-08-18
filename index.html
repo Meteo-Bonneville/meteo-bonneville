@@ -443,15 +443,29 @@ function togglePollen() {
         fetch("pollen.json?ts=" + Date.now())
           .then(response => response.json())
           .then(data => {
-            document.getElementById("pollen-contenu").innerHTML =
-              "🌿 <strong>Allergies / Pollens à " + data.ville + "</strong><br>" +
-              "Risque global : <strong>" + data.niveau + "</strong><br>" +
-              "Graminées : " + data.graminees + "<br>" +
-              "Bouleau : " + data.bouleau + "<br>" +
-              "Aulne : " + data.aulne + "<br>" +
-              "Ambroisie : " + data.ambroisie + "<br>" +
-              "Armoise : " + data.armoise + "<br>" +
-              "Olivier : " + data.olivier;
+const couleurPollen = niveau => {
+  const n = niveau.toLowerCase();
+  if (n.includes("très faible")) return "#00c853";
+  if (n.includes("faible")) return "#64dd17";
+  if (n.includes("modéré") || n.includes("moyen")) return "#ffeb00";
+  if (n.includes("très élevé")) return "#ff0000";
+  if (n.includes("élevé")) return "#ff8c00";
+  return "#cccccc";
+};
+const lignePollen = (nom, niveau) =>
+  '<span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:' +
+  couleurPollen(niveau) + ';margin-right:7px;"></span>' +
+  nom + " : <strong>" + niveau + "</strong><br>";
+
+document.getElementById("pollen-contenu").innerHTML =
+  "🌿 <strong>Allergies / Pollens à " + data.ville + "</strong><br>" +
+  lignePollen("Risque global", data.niveau) +
+  lignePollen("Graminées", data.graminees) +
+  lignePollen("Bouleau", data.bouleau) +
+  lignePollen("Aulne", data.aulne) +
+  lignePollen("Ambroisie", data.ambroisie) +
+  lignePollen("Armoise", data.armoise) +
+  lignePollen("Olivier", data.olivier);
           });
         const boutonPollen = document.querySelector('a[onclick*="togglePollen"]');
         const parentRect = pollen.parentElement.getBoundingClientRect();
