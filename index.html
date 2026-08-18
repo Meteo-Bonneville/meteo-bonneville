@@ -440,6 +440,19 @@ function togglePollen() {
 
     if (doitOuvrir) {
         pollen.style.display = "block";
+        fetch("pollen.json?ts=" + Date.now())
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById("pollen-contenu").innerHTML =
+              "🌿 <strong>Allergies / Pollens à " + data.ville + "</strong><br>" +
+              "Risque global : <strong>" + data.niveau + "</strong><br>" +
+              "Graminées : " + data.graminees + "<br>" +
+              "Bouleau : " + data.bouleau + "<br>" +
+              "Aulne : " + data.aulne + "<br>" +
+              "Ambroisie : " + data.ambroisie + "<br>" +
+              "Armoise : " + data.armoise + "<br>" +
+              "Olivier : " + data.olivier;
+          });
         const boutonPollen = document.querySelector('a[onclick*="togglePollen"]');
         const parentRect = pollen.parentElement.getBoundingClientRect();
         const boutonRect = boutonPollen.getBoundingClientRect();
