@@ -157,11 +157,17 @@ menu-deroulant{
 </div>
 </div>
   <a href="#" onclick="toggleAir(); return false;">🏭 Qualité de l'air</a>
+  <a href="#" onclick="togglePollen(); return false;">🌿 Allergies / Pollens</a>
   <a href="#previsions">📅 Prévisions</a>
   <a href="#graphiques">📊 Graphiques</a>
   <a href="#contact">✉️ Contact</a>
   <a href="#photos">📸 Photos</a>
 </nav>
+<div id="sous-menu-pollen" class="sous-menu" style="display:none; width:max-content; max-width:90%;">
+  <div id="pollen-contenu">
+    🌿 Allergies / Pollens : chargement...
+  </div>
+</div>
   <div id="sous-menu-air" class="sous-menu" style="display:none; width:max-content; max-width:90%;">
   <div id="air-contenu">
     🌿 Qualité de l'air : chargement...
@@ -422,6 +428,24 @@ function toggleCartes(element) {
     } else {
         cartes.style.display = "none";
         document.getElementById("affichage-cartes").style.display = "none";
+    }
+}
+
+function togglePollen() {
+    const pollen = document.getElementById("sous-menu-pollen");
+    const air = document.getElementById("sous-menu-air");
+    const doitOuvrir = pollen.style.display !== "block";
+
+    air.style.display = "none";
+
+    if (doitOuvrir) {
+        pollen.style.display = "block";
+        const boutonPollen = document.querySelector('a[onclick*="togglePollen"]');
+        const parentRect = pollen.parentElement.getBoundingClientRect();
+        const boutonRect = boutonPollen.getBoundingClientRect();
+        pollen.style.marginLeft = Math.max(0, boutonRect.left - parentRect.left) + "px";
+    } else {
+        pollen.style.display = "none";
     }
 }
 
