@@ -355,11 +355,9 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
 
 <div class="valeur">
 <h3>🌦️ Prévisions</h3>
-<p>
-<a href="https://www.lachainemeteo.com/meteo-france/ville-26656/previsions-meteo-bonneville-aujourdhui" target="_blank">
-🔮 Prévisions détaillées Bonneville
-</a>
-</p>
+<div id="previsions-openmeteo">
+Chargement des prévisions météo...
+</div>
 </div>
 
 </div>
@@ -411,6 +409,43 @@ async function majMeteo() {
 majMeteo();
 setInterval(majMeteo, 60000);
 
+</script>
+<script>
+async function chargerPrevisions() {
+try {
+  const url = "https://api.open-meteo.com/v1/forecast?latitude=46.08&longitude=6.41&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max&timezone=Europe%2FParis&forecast_days=7";
+  const reponse = await fetch(url);
+  const data = await reponse.json();
+const bloc = document.getElementById("previsions-openmeteo");
+let html = "";
+
+for (let i = 0; i < data.daily.time.length; i++) {
+  const date = new Date(data.daily.time[i]);
+const jour = date.toLocaleDateString("fr-FR", {
+  weekday: "long",
+  day: "numeric",
+  month: "short"
+});
+html += "<div class='prevision-jour'>";
+html += "<strong>" + jour + "</strong><br>";
+html += "🌡️ " + Math.round(data.daily.temperature_2m_min[i]) + "°C / " + Math.round(data.daily.temperature_2m_max[i]) + "°C<br>";
+html += "🌧️ " + data.daily.precipitation_sum[i] + " mm<br>";
+html += "💨 " + Math.round(data.daily.wind_speed_10m_max[i]) + " km/h";
+html += "</div>";
+}
+
+bloc.innerHTML = html;
+
+} catch (erreur) {
+  console.error("Erreur prévisions :", erreur);
+  const bloc = document.getElementById("previsions-openmeteo");
+  if (bloc) bloc.innerHTML = "Prévisions temporairement indisponibles.";
+}
+}
+
+chargerPrevisions();
+}
+chargerPrevisions();
 </script>
 <script>
 async function mettreAJourVigicrues() {
