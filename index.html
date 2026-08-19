@@ -303,36 +303,48 @@ menu-deroulant{
 
 <div id="carte-radar-bloc" class="valeur">
 <h3>🌧️ Radar pluie</h3>
-<p>
-<a href="https://www.meteociel.fr/observations-meteo/radar2.php?region=se&amp;&amp;mode=1" target="_blank">🌧️ Région</a><br>
-<a href="https://www.meteociel.fr/observations-meteo/radar2.php?region=fr&amp;mode=1" target="_blank">🇫🇷 France entière</a>
-</p>
+<img id="radar-pluie"
+src="https://www.meteociel.fr/cartes_obs/radar/lastradar5m_se.gif"
+alt="Radar des précipitations Sud-Est"
+style="width:100%;max-width:768px;height:auto;border-radius:10px;">
+<p style="font-size:12px;">Source Météo-France — adapté par Meteociel.fr</p>
 </div>
 
 <div id="carte-foudre-bloc" class="valeur">
 <h3>⚡ Foudre</h3>
-<p>
-<a href="https://www.meteociel.fr/observations-meteo/foudre-direct.php?x=25694.34&amp;y=28434.77&amp;zoom=4.7" target="_blank">⚡ Région</a><br>
-<a href="https://www.meteociel.fr/observations-meteo/foudre-direct.php" target="_blank">🇫🇷 France entière</a>
-</p>
+
+<p><strong>Sud-Est</strong></p>
+<img id="https://modeles20.meteociel.fr/satellite/foudreli/animse.gif"
+alt="Animation foudre Sud-Est"
+style="width:100%;max-width:768px;height:auto;border-radius:10px;">
+
+<p><strong>France entière</strong></p>
+<img id="https://modeles20.meteociel.fr/satellite/foudreli/anim.gif"
+alt="Animation foudre France"
+style="width:100%;max-width:768px;height:auto;border-radius:10px;">
+
 </div>
 
 <div id="carte-satellite-bloc" class="valeur">
 <h3>🛰️ Satellite</h3>
-<p>
-<a href="https://www.meteociel.fr/observations-meteo/satellite.php?mode=animation-infrarouge-colorise-hd-mtg" target="_blank">
-🛰️ Animation satellite HD
-</a>
-</p>
+<img id="satellite"
+src="https://modeles20.meteociel.fr/satellite/msg0_animsatircolmsgeu.gif"
+alt="Animation satellite Europe" style="width:100%;max-width:768px;height:auto;border-radius:10px;">
 </div>
 
 <div id="carte-temperature-bloc" class="valeur">
 <h3>🌡️ Températures</h3>
-<p>
-<a href="https://www.meteociel.fr/observations-meteo/temperatures.php?region=r11" target="_blank">
-🌡️ Températures actuelles de la région
-</a>
-</p>
+
+<p><strong>Sud-Est</strong></p>
+<img id="https://www.meteociel.fr/cartes_obs/temp_r11.png"
+alt="Températures actuelles Sud-Est"
+style="width:100%;max-width:768px;height:auto;border-radius:10px;">
+
+<p><strong>France entière</strong></p>
+<img id="https://www.meteociel.fr/cartes_obs/temp.png"
+alt="Températures actuelles France"
+style="width:100%;max-width:768px;height:auto;border-radius:10px;">
+
 </div>
 
 </div>
@@ -628,6 +640,22 @@ mettreAJourVigicrues();
 mettreAJourMeteo();
 setInterval(mettreAJourVigicrues, 300000);
 setInterval(mettreAJourMeteo, 300000);
+setInterval(() => {
+  const t = Date.now();
+  document.getElementById("radar-pluie").src =
+    "https://www.meteociel.fr/cartes_obs/radar/lastradar5m_se.gif?t=" + t;
+  document.getElementById("satellite").src =
+    "https://modeles20.meteociel.fr/satellite/msg0_animsatircolmsgeu.gif?t=" + t;
+document.getElementById("foudre-se").src =
+    "https://modeles20.meteociel.fr/satellite/foudreli/animse.gif?t=" + t;
+  document.getElementById("foudre-fr").src =
+    "https://modeles20.meteociel.fr/satellite/foudreli/anim.gif?t=" + t;
+  document.getElementById("temperature-se").src =
+    "https://www.meteociel.fr/cartes_obs/temp_r11.png?t=" + t;
+  document.getElementById("temperature-fr").src =
+    "https://www.meteociel.fr/cartes_obs/temp.png?t=" + t;
+}, 300000);
+
 </script>
 
 </body>
