@@ -489,6 +489,7 @@ function togglePollen() {
     const doitOuvrir = pollen.style.display !== "block";
 
     air.style.display = "none";
+    document.getElementById("previsions").style.display = "none";
 
     if (doitOuvrir) {
         pollen.style.display = "block";
@@ -538,6 +539,7 @@ function toggleAir() {
     cartes.style.display = "none";
     document.getElementById("affichage-vigilance").style.display = "none";
     document.getElementById("affichage-cartes").style.display = "none";
+    document.getElementById("previsions").style.display = "none";
 
     if (doitOuvrir) {
         air.style.display = "block";
@@ -598,6 +600,7 @@ function afficherCarte(type) {
   const bloc = document.getElementById("carte-" + type + "-bloc");
   const dejaOuvert = bloc.style.display === "block";
 
+  document.getElementById("previsions").style.display = "none";
   document.getElementById("carte-radar-bloc").style.display = "none";
   document.getElementById("carte-foudre-bloc").style.display = "none";
   document.getElementById("carte-satellite-bloc").style.display = "none";
@@ -620,6 +623,7 @@ function toggleVigilance() {
 
     cartes.style.display = "none";
     document.getElementById("affichage-cartes").style.display = "none";
+    document.getElementById("previsions").style.display = "none";
 
     if (doitOuvrir) {
         vigilance.style.display = "block";
