@@ -158,7 +158,7 @@ menu-deroulant{
 </div>
   <a href="#" onclick="toggleAir(); return false;">🏭 Qualité de l'air</a>
   <a href="#" onclick="togglePollen(); return false;">🌿 Allergies / Pollens</a>
-<a href="#previsions" onclick="document.getElementById('previsions').scrollIntoView({behavior:'smooth'}); return false;">🌤️ Prévisions</a>
+  <a href="#" onclick="togglePrevisions(); return false;">🌤️ Prévisions</a>
   <a href="#graphiques">📊 Graphiques</a>
 </nav>
 <div id="sous-menu-pollen" class="sous-menu" style="display:none; width:max-content; max-width:90%;">
@@ -356,7 +356,7 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
 </div>
 </div>
 </div>
-<div id="previsions">
+<div id="previsions" style="display:none;">
 <div class="valeur">
 <h3>🌤️ Prévisions</h3>
 <div id="previsions-openmeteo">
@@ -580,6 +580,17 @@ zone.innerHTML = `
 } catch (erreur) {
     console.error("Erreur qualité de l'air :", erreur);
 }
+}
+
+function togglePrevisions() {
+    const previsions = document.getElementById("previsions");
+    const doitOuvrir = previsions.style.display !== "block";
+
+    previsions.style.display = doitOuvrir ? "block" : "none";
+
+    if (doitOuvrir) {
+        previsions.scrollIntoView({behavior:"smooth"});
+    }
 }
 
 function afficherCarte(type) {
