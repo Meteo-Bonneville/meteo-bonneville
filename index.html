@@ -236,6 +236,10 @@ Chargement des prévisions météo...
 </div>
 
 </div>
+
+<div id="point-rosee-barre" style="margin:14px auto 12px auto;max-width:700px;padding:12px 18px;text-align:center;border:1px solid #3aa8ff;border-radius:10px;background:rgba(20,45,70,0.45);color:#8fd3ff;font-weight:600;">
+💧 Point de rosée : <span id="point_rosee">-- °C</span>
+</div>
 <details class="menu-deroulant">
 <summary>🌡️ Mini / Maxi du jour</summary>
 
@@ -421,6 +425,11 @@ async function majMeteo() {
     document.getElementById("rayonnement").textContent = d.rayonnement + " W/m²";
     document.getElementById("uv").textContent = d.uv
     document.getElementById("pression").textContent = d.pression + " hPa";
+        const pr = document.getElementById("point_rosee");
+        if (pr && d.point_rosee != null) {
+            pr.textContent = d.point_rosee + " °C";
+        }
+
 
 }
 
