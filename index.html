@@ -368,7 +368,7 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
 </div>
 
 <footer>
-<p>👥 Visites du site : <span id="visites" data-goatcounter-visit-count="total">...</span></p>
+<p>👥 Visites du site : <span id="visites">...</span></p>
 
 <p>Station météo de Bonneville - Haute-Savoie (74130)</p>
 <p>
@@ -713,6 +713,20 @@ document.getElementById("foudre-se").src =
 
 </script>
 
+
+
+<script>
+var gcTimer = setInterval(function() {
+    if (window.goatcounter && window.goatcounter.visit_count) {
+        clearInterval(gcTimer);
+        window.goatcounter.visit_count({
+            append: '#visites',
+            path: 'TOTAL',
+            no_branding: true
+        });
+    }
+}, 100);
+</script>
 
 <script data-goatcounter="https://meteo-bonneville.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
