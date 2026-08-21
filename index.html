@@ -208,6 +208,9 @@ Chargement des prévisions météo...
 
 <div class="valeur">
 <h3>🌧️ Pluie</h3>
+<div style="font-size:0.9em; opacity:0.85;">Dernière heure</div>
+<div class="nombre" id="pluie_heure">-- mm</div>
+<div style="font-size:0.9em; opacity:0.85; margin-top:8px;">Cumul du jour</div>
 <div class="nombre" id="pluie">-- mm</div>
 </div>
 
@@ -408,6 +411,7 @@ async function majMeteo() {
     document.getElementById("vent").textContent = d.vent + " km/h";
     document.getElementById("rafale").textContent = d.rafale + " km/h";
     document.getElementById("rafale_max_jour").textContent = d.rafale_max_jour + " km/h";
+    document.getElementById("pluie_heure").textContent = d.pluie_h + " mm";
     document.getElementById("pluie").textContent = d.pluie_totale + " mm";
     document.getElementById("pluie_jour").textContent = d.pluie_totale + " mm";
     document.getElementById("rayonnement").textContent = d.rayonnement + " W/m²";
