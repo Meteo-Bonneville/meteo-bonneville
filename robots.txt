@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://meteo-bonneville.github.io/meteo-bonneville/sitemap.xml
