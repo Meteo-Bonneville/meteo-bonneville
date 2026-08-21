@@ -715,17 +715,18 @@ document.getElementById("foudre-se").src =
 
 
 
+
+
+
 <script>
-var gcTimer = setInterval(function() {
-    if (window.goatcounter && window.goatcounter.visit_count) {
-        clearInterval(gcTimer);
-        window.goatcounter.visit_count({
-            append: '#visites',
-            path: 'TOTAL',
-            no_branding: true
-        });
-    }
-}, 100);
+fetch("https://meteo-bonneville.goatcounter.com/counter/TOTAL.json")
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById("visites").textContent = data.count;
+  })
+  .catch(() => {
+    document.getElementById("visites").textContent = "—";
+  });
 </script>
 
 <script data-goatcounter="https://meteo-bonneville.goatcounter.com/count"
