@@ -5,7 +5,7 @@
     "heure_temp_max": "00:04",
     "heure_temp_min": "12:34",
     "temp_min_jour": 16.0,
-    "humidite": null,
+    "humidite": 98.3,
     "pression": 1014.2,
     "vent": 2.3,
     "rafale": 2.3,
