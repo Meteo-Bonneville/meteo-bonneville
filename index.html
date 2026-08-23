@@ -130,6 +130,74 @@ menu-deroulant{
   font-size: 14px;
 }
 
+
+/* ===== ADAPTATION TELEPHONE ===== */
+@media (max-width: 600px) {
+
+  body {
+    margin: 0;
+    padding: 0 10px;
+    overflow-x: hidden;
+  }
+
+  header {
+    padding: 14px 8px;
+  }
+
+  header h1 {
+    font-size: 28px;
+    line-height: 1.15;
+  }
+
+  header p {
+    font-size: 16px;
+  }
+
+  .menu-principal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 8px 0;
+  }
+
+  .menu-principal > a {
+    padding: 11px 6px;
+    font-size: 15px;
+    text-align: center;
+    min-width: 0;
+  }
+
+  .sous-menu {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  .sous-menu button {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 15px;
+  }
+
+  img,
+  iframe {
+    max-width: 100% !important;
+    height: auto;
+  }
+
+  footer {
+    padding: 18px 6px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 380px) {
+  .menu-principal {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>
 
 </head>
