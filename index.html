@@ -934,10 +934,10 @@ document.getElementById("contact-form").addEventListener("submit", async functio
   try {
     const data = new FormData();
     data.append("file", fichier);
-    data.append("upload_preset", "meteo-bonneville-photos");
+    data.append("upload_preset", "Meteo-Bonneville-Photos");
 
     const r = await fetch(
-      "https://api.cloudinary.com/v1_1/m4mbgxal/image/upload",
+      "https://api.cloudinary.com/v1_1/m4mbgxa1/image/upload",
       { method: "POST", body: data }
     );
 
