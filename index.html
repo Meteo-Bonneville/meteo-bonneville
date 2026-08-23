@@ -458,7 +458,7 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
 <div id="contact" style="max-width:700px;margin:35px auto;padding:22px;background:#20272f;border-radius:16px;text-align:left;">
   <h2 style="color:#55c7ff;text-align:center;">✉️ Contact</h2>
 
-  <form action="https://api.web3forms.com/submit" method="POST">
+  <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
     <input type="hidden" name="access_key" value="9db64f06-bd90-439c-9a01-4f9274b50761">
     <input type="hidden" name="subject" value="Nouveau message - Station Météo Bonneville">
 
@@ -473,6 +473,14 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
     <label>Votre message</label>
     <textarea name="message" rows="6" required
       style="width:100%;box-sizing:border-box;margin:6px 0 14px;padding:12px;border-radius:8px;border:1px solid #3a4855;background:#111820;color:white;"></textarea>
+
+    <label>📷 Photo météo (facultatif)</label>
+    <input type="file" id="photo-fichier" accept="image/jpeg,image/png,image/webp"
+      style="width:100%;box-sizing:border-box;margin:6px 0 14px;padding:10px;border-radius:8px;border:1px solid #3a4855;background:#111820;color:white;">
+
+    <input type="hidden" id="photo-url" name="photo_url" value="">
+
+    <p id="photo-statut" style="font-size:14px;color:#55c7ff;"></p>
 
     <label style="display:flex;gap:8px;align-items:center;margin-bottom:18px;">
       <input type="checkbox" name="proposition_photo" value="Oui">
@@ -910,6 +918,42 @@ fetch("https://meteo-bonneville.goatcounter.com/counter/TOTAL.json")
 
 <script data-goatcounter="https://meteo-bonneville.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
+
+
+<script>
+document.getElementById("contact-form").addEventListener("submit", async function(e) {
+  const fichier = document.getElementById("photo-fichier").files[0];
+
+  if (!fichier) return;
+
+  e.preventDefault();
+
+  const statut = document.getElementById("photo-statut");
+  statut.textContent = "📤 Envoi de la photo en cours...";
+
+  try {
+    const data = new FormData();
+    data.append("file", fichier);
+    data.append("upload_preset", "Meteo-Bonneville-Photos");
+
+    const r = await fetch(
+      "https://api.cloudinary.com/v1_1/m4mbgxal/image/upload",
+      { method: "POST", body: data }
+    );
+
+    if (!r.ok) throw new Error("Erreur Cloudinary");
+
+    const resultat = await r.json();
+    document.getElementById("photo-url").value = resultat.secure_url;
+
+    statut.textContent = "✅ Photo envoyée.";
+    this.submit();
+
+  } catch (err) {
+    statut.textContent = "❌ Impossible d'envoyer la photo. Réessayez.";
+  }
+});
+</script>
 
 </body>
 
