@@ -455,7 +455,7 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
 </div>
 
 
-<div id="contact" style="max-width:700px;margin:35px auto;padding:22px;background:#20272f;border-radius:16px;text-align:left;">
+<div id="contact" style="display:none;max-width:700px;margin:35px auto;padding:22px;background:#20272f;border-radius:16px;text-align:left;">
   <h2 style="color:#55c7ff;text-align:center;">✉️ Contact</h2>
 
   <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
@@ -495,7 +495,7 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
 </div>
 
 
-<div id="photos" style="max-width:700px;margin:35px auto;padding:22px;background:#20272f;border-radius:16px;text-align:center;">
+<div id="photos" style="display:none;max-width:700px;margin:35px auto;padding:22px;background:#20272f;border-radius:16px;text-align:center;">
   <h2 style="color:#55c7ff;">📷 Photos météo</h2>
 
   <p>
@@ -952,6 +952,42 @@ document.getElementById("contact-form").addEventListener("submit", async functio
   } catch (err) {
     statut.textContent = "❌ Impossible d'envoyer la photo. Réessayez.";
   }
+});
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const contact = document.getElementById("contact");
+  const photos = document.getElementById("photos");
+  const contactLinks = document.querySelectorAll('a[href="#contact"]');
+  const photosLinks = document.querySelectorAll('a[href="#photos"]');
+
+  function togglePanel(panel, other) {
+    const ouvrir = panel.style.display === "none" || panel.style.display === "";
+    if (other) other.style.display = "none";
+    panel.style.display = ouvrir ? "block" : "none";
+
+    if (ouvrir) {
+      setTimeout(() => {
+        panel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 50);
+    }
+  }
+
+  contactLinks.forEach(link => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      togglePanel(contact, photos);
+    });
+  });
+
+  photosLinks.forEach(link => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      togglePanel(photos, contact);
+    });
+  });
 });
 </script>
 
