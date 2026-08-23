@@ -934,7 +934,7 @@ document.getElementById("contact-form").addEventListener("submit", async functio
   try {
     const data = new FormData();
     data.append("file", fichier);
-    data.append("upload_preset", "Meteo-Bonneville-Photos");
+    data.append("upload_preset", "meteo-bonneville-photos");
 
     const r = await fetch(
       "https://api.cloudinary.com/v1_1/m4mbgxal/image/upload",
