@@ -942,6 +942,7 @@ document.getElementById("contact-form").addEventListener("submit", async functio
     const data = new FormData();
     data.append("file", fichier);
     data.append("upload_preset", "Meteo-Bonneville-Photos");
+    data.append("tags", "meteo-bonneville");
 
     const r = await fetch(
       "https://api.cloudinary.com/v1_1/m4mbgxa1/image/upload",
@@ -996,6 +997,87 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+</script>
+
+
+<script>
+window.addEventListener("pageshow", function (event) {
+  const nav = performance.getEntriesByType("navigation")[0];
+  const retour = event.persisted || (nav && nav.type === "back_forward");
+
+  if (retour) {
+    const form = document.getElementById("contact-form");
+    if (form) form.reset();
+
+    const photoUrl = document.getElementById("photo-url");
+    if (photoUrl) photoUrl.value = "";
+
+    const statut = document.getElementById("photo-statut");
+    if (statut) statut.textContent = "";
+  }
+});
+</script>
+
+
+<script>
+async function chargerGaleriePhotos() {
+  const galerie = document.getElementById("galerie-photos");
+  const message = document.getElementById("galerie-vide");
+  if (!galerie) return;
+
+  try {
+    const r = await fetch(
+      "https://res.cloudinary.com/m4mbgxa1/image/list/meteo-bonneville.json?t=" + Date.now()
+    );
+
+    if (!r.ok) throw new Error("Liste Cloudinary inaccessible");
+
+    const data = await r.json();
+    const photos = (data.resources || []).sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
+
+    galerie.innerHTML = "";
+
+    if (!photos.length) {
+      if (message) message.textContent = "📷 Aucune photo publiée pour le moment.";
+      return;
+    }
+
+    if (message) message.style.display = "none";
+
+    photos.forEach(photo => {
+      const publicId = photo.public_id.split("/").map(encodeURIComponent).join("/");
+      const url =
+        "https://res.cloudinary.com/m4mbgxa1/image/upload/" +
+        "c_fill,w_700,h_450,q_auto,f_auto/" +
+        "v" + photo.version + "/" + publicId + "." + photo.format;
+
+      const lien = document.createElement("a");
+      lien.href = url;
+      lien.target = "_blank";
+      lien.rel = "noopener";
+
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = "Photo météo partagée";
+      img.loading = "lazy";
+      img.style.width = "100%";
+      img.style.height = "180px";
+      img.style.objectFit = "cover";
+      img.style.borderRadius = "10px";
+
+      lien.appendChild(img);
+      galerie.appendChild(lien);
+    });
+
+  } catch (e) {
+    console.error(e);
+    if (message) message.textContent = "📷 Galerie temporairement indisponible.";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", chargerGaleriePhotos);
 </script>
 
 </body>
