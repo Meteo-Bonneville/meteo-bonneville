@@ -348,13 +348,14 @@ Chargement des prévisions météo...
   <div class="valeur">
     <h3>Haute-Savoie (74)</h3>
 
-<iframe
-src="https://vigilance.meteofrance.fr/fr/widget-vigilance/vigilance-departement/74"
-width="302"
-height="122"
-frameborder="0"
-style="max-width:100%;margin:10px auto;display:block;">
-</iframe>
+
+<div style="margin:18px auto;padding:16px;border-radius:10px;background:#111820;max-width:560px;">
+  <p style="margin:0;color:white;font-size:16px;line-height:1.5;">
+    ⚠️ Consultez la vigilance officielle Météo-France pour connaître
+    les phénomènes en cours en Haute-Savoie.
+  </p>
+</div>
+
 
 <p style="margin:20px 0 10px 0;">
   <a href="https://vigilance.meteofrance.fr/fr/haute-savoie"
@@ -481,7 +482,20 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
     <textarea name="message" rows="6" required
       style="width:100%;box-sizing:border-box;margin:6px 0 14px;padding:12px;border-radius:8px;border:1px solid #3a4855;background:#111820;color:white;"></textarea>
 
-    <label>📷 Photo météo (facultatif)</label>
+    
+<label>📍 Lieu de la photo</label>
+<input type="text"
+       name="photo_lieu"
+       placeholder="Ex. Bonneville, Ayse, La Roche-sur-Foron..."
+       style="width:100%;box-sizing:border-box;margin:6px 0 14px;padding:12px;border-radius:8px;background:#111820;color:white;">
+
+<label>💬 Commentaire / description de la photo</label>
+<textarea name="photo_commentaire"
+          rows="3"
+          placeholder="Ex. Coucher de soleil vers 20h45, orage au-dessus du Bargy..."
+          style="width:100%;box-sizing:border-box;margin:6px 0 14px;padding:12px;border-radius:8px;background:#111820;color:white;"></textarea>
+
+<label>📷 Photo météo (facultatif)</label>
     <input type="file" id="photo-fichier" accept="image/jpeg,image/png,image/webp"
       style="width:100%;box-sizing:border-box;margin:6px 0 14px;padding:10px;border-radius:8px;border:1px solid #3a4855;background:#111820;color:white;">
 
@@ -528,7 +542,7 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
 
 <p id="galerie-vide"
    style="margin-top:20px;font-weight:bold;color:#55c7ff;">
-  📸 Galerie prochainement alimentée
+  📸 Galerie photos météo
 </p>
 
   <p style="font-size:14px;">
