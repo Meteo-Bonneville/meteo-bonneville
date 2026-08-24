@@ -970,6 +970,28 @@ document.getElementById("contact-form").addEventListener("submit", async functio
     const resultat = await r.json();
     document.getElementById("photo-url").value = resultat.secure_url;
 
+    const notification = await fetch(
+      "https://super-snow-a20b.sylgrosjean17.workers.dev/notify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          asset_id: resultat.asset_id,
+          secure_url: resultat.secure_url,
+          nom: document.querySelector('[name="name"]')?.value || "",
+          lieu: document.querySelector('[name="photo_lieu"]')?.value || "",
+          commentaire: document.querySelector('[name="photo_commentaire"]')?.value || ""
+        })
+      }
+    );
+
+    if (!notification.ok) {
+      const erreur = await notification.text();
+      throw new Error("Notification : " + erreur);
+    }
+
     statut.textContent = "✅ Photo envoyée.";
     this.submit();
 
