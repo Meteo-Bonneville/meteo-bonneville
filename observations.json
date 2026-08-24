@@ -1,5 +1,5 @@
 {
-    "date": "2026-08-24 07:19:48",
+    "date": "2026-08-24 07:14:48",
     "temperature": 14.5,
     "temp_max_jour": 17.5,
     "heure_temp_max": "00:04",
@@ -16,5 +16,5 @@
     "pluie_h": 0.0,
     "pluie_totale": 0.0,
     "uv": 0,
-    "rayonnement": 16.8
+    "rayonnement": 16.9
 }
