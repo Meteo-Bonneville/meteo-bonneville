@@ -1067,7 +1067,7 @@ async function chargerGaleriePhotos() {
 
   try {
     const r = await fetch(
-      "https://res.cloudinary.com/m4mbgxa1/image/list/meteo-bonneville.json?t=" + Date.now()
+      "https://res.cloudinary.com/m4mbgxa1/image/list/meteo-bonneville-approved.json?t=" + Date.now()
     );
 
     if (!r.ok) throw new Error("HTTP " + r.status);
