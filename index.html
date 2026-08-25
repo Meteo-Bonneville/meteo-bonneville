@@ -275,8 +275,8 @@ Chargement des prévisions météo...
 </div>
 
 <div class="valeur">
-<h3>🌧️ Pluie dernière heure</h3>
-<div class="nombre" id="pluie_heure">-- mm</div>
+<h3>🌧️ Intensité de la pluie</h3>
+<div class="nombre" id="pluie_heure">-- mm/h</div>
 </div>
 
 <div class="valeur">
@@ -1073,7 +1073,7 @@ async function chargerGaleriePhotos() {
     if (!r.ok) throw new Error("HTTP " + r.status);
 
     const data = await r.json();
-    const photos = (data.resources || []).slice().reverse();
+    const photos = (data.resources || []).slice().sort((a,b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
 
     galerie.innerHTML = "";
 
@@ -1089,7 +1089,7 @@ async function chargerGaleriePhotos() {
 
       const url =
         "https://res.cloudinary.com/m4mbgxa1/image/upload/" +
-        "c_fill,w_700,h_450,q_auto,f_auto/" +
+        "c_limit,w_700,q_auto,f_auto/" +
         id + "." + photo.format;
 
       const lien = document.createElement("a");
@@ -1102,7 +1102,7 @@ async function chargerGaleriePhotos() {
       img.alt = "Photo météo partagée";
       img.loading = "lazy";
       img.style.width = "100%";
-      img.style.height = "180px";
+      img.style.height = "auto";
       img.style.objectFit = "cover";
       img.style.borderRadius = "10px";
 
