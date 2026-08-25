@@ -640,10 +640,10 @@ const jour = date.toLocaleDateString("fr-FR", {
   month: "short"
 });
 html += "<div class='prevision-jour'>";
-html += "<strong>" + jour + "</strong><br>";
-html += "🌡️ " + Math.round(data.daily.temperature_2m_min[i]) + "°C / " + Math.round(data.daily.temperature_2m_max[i]) + "°C<br>";
-html += "🌧️ " + data.daily.precipitation_sum[i] + " mm<br>";
-html += "💨 " + Math.round(data.daily.wind_speed_10m_max[i]) + " km/h";
+html += "<strong>" + jour + "</strong>";
+html += "<div class='prevision-ligne'><span>🌡️ Températures</span><span>" + Math.round(data.daily.temperature_2m_min[i]) + "° / " + Math.round(data.daily.temperature_2m_max[i]) + "°</span></div>";
+html += "<div class='prevision-ligne'><span>🌧️ Pluie</span><span>" + data.daily.precipitation_sum[i] + " mm</span></div>";
+html += "<div class='prevision-ligne'><span>💨 Vent max.</span><span>" + Math.round(data.daily.wind_speed_10m_max[i]) + " km/h</span></div>";
 html += "</div>";
 }
 
@@ -1122,3 +1122,29 @@ document.addEventListener("DOMContentLoaded", chargerGaleriePhotos);
 </body>
 
 </html>
+<style>
+#previsions-openmeteo {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+}
+.prevision-jour {
+  background: #232a31;
+  border-radius: 14px;
+  padding: 16px 18px;
+  text-align: left;
+  box-sizing: border-box;
+}
+.prevision-jour strong {
+  display: block;
+  text-align: center;
+  font-size: 1.15em;
+  margin-bottom: 10px;
+}
+.prevision-ligne {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 6px 0;
+}
+</style>
