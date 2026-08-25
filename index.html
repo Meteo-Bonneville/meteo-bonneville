@@ -1241,3 +1241,25 @@ document.addEventListener("DOMContentLoaded", chargerGaleriePhotos);
     margin-right: auto;
 }
 </style>
+
+<style>
+@media (max-width: 700px) {
+  #sous-menu-vigilance,
+  #sous-menu-cartes {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    left: auto !important;
+    right: auto !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  #sous-menu-vigilance button,
+  #sous-menu-cartes button {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+</style>
