@@ -205,7 +205,7 @@ menu-deroulant{
 <body>
 
 <header>
-    <h1>🌦️ Station météo de Bonneville</h1>
+    <h1><span id="icone-meteo">🌤️</span> Station météo de Bonneville</h1>
     <p>Haute-Savoie (74130)</p>
 </header>
 <nav class="menu-principal">
@@ -228,6 +228,8 @@ menu-deroulant{
   <a href="#" onclick="togglePollen(); return false;">🌿 Allergies / Pollens</a>
   <a href="#" onclick="togglePrevisions(); return false;">🌤️ Prévisions</a>
   <a href="#graphiques">📊 Graphiques</a>
+<a href="#contact">✉️ Contact</a>
+<a href="#photos">📸 Galerie Photos</a>
 </nav>
 <div id="sous-menu-pollen" class="sous-menu" style="display:none; width:90%; max-width:90%; margin-left:auto; margin-right:auto; box-sizing:border-box;">
   <div id="pollen-contenu">
@@ -347,6 +349,19 @@ Chargement des prévisions météo...
   <h2>⚠️ Vigilance météo</h2>
   <div class="valeur">
     <h3>Haute-Savoie (74)</h3>
+
+<p id="vigilance-meteo"
+   style="margin:14px auto 8px auto;
+          padding:10px 14px;
+          max-width:620px;
+          border-radius:10px;
+          background:#111820;
+          color:white;
+          font-weight:bold;
+          line-height:1.45;
+          text-align:center;">
+  Vigilance en cours : chargement...
+</p>
 
 
 <div style="margin:18px auto;padding:16px;border-radius:10px;background:#111820;max-width:560px;">
@@ -518,7 +533,7 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
 
 
 <div id="photos" style="display:none;max-width:700px;margin:35px auto;padding:22px;background:#20272f;border-radius:16px;text-align:center;">
-  <h2 style="color:#55c7ff;">📷 Photos météo</h2>
+  <h2 style="color:#55c7ff;">📷 Galerie Photos</h2>
 
   <p>
     Retrouvez ici les photos météo partagées par les visiteurs :
@@ -627,7 +642,7 @@ setInterval(majMeteo, 60000);
 <script>
 async function chargerPrevisions() {
 try {
-  const url = "https://api.open-meteo.com/v1/forecast?latitude=46.08&longitude=6.41&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max&timezone=Europe%2FParis&forecast_days=7";
+  const url = "https://api.open-meteo.com/v1/forecast?latitude=46.08&longitude=6.41&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max&current=weather_code&timezone=Europe%2FParis&forecast_days=7";
   const reponse = await fetch(url);
   const data = await reponse.json();
 const bloc = document.getElementById("previsions-openmeteo");
@@ -771,6 +786,23 @@ async function chargerAir() {
     try {
         const response = await fetch("air.json?t=" + Date.now());
         const data = await response.json();
+
+    const iconeMeteo = document.getElementById("icone-meteo");
+    if (iconeMeteo && data.current) {
+      const code = Number(data.current.weather_code);
+      let icone = "🌤️";
+
+      if (code === 0) icone = "☀️";
+      else if (code === 1 || code === 2) icone = "🌤️";
+      else if (code === 3) icone = "☁️";
+      else if (code === 45 || code === 48) icone = "🌫️";
+      else if ([51,53,55,56,57].includes(code)) icone = "🌦️";
+      else if ([61,63,65,66,67,80,81,82].includes(code)) icone = "🌧️";
+      else if ([71,73,75,77,85,86].includes(code)) icone = "🌨️";
+      else if ([95,96,99].includes(code)) icone = "⛈️";
+
+      iconeMeteo.textContent = icone;
+    }
 
         const zone = document.getElementById("air-contenu");
 let couleur = "#00c853";
@@ -1108,7 +1140,49 @@ async function chargerGaleriePhotos() {
       img.style.borderRadius = "10px";
 
       lien.appendChild(img);
-      galerie.appendChild(lien);
+
+      const carte = document.createElement("div");
+      carte.style.width = "100%";
+      carte.style.textAlign = "left";
+      carte.appendChild(lien);
+
+      const contexte = (photo.context && photo.context.custom)
+        ? photo.context.custom
+        : (photo.context || {});
+
+      const nom = contexte.nom || "";
+      const lieu = contexte.lieu || "";
+      const commentaire = contexte.commentaire || "";
+
+      if (commentaire || lieu || nom) {
+        const legende = document.createElement("div");
+        legende.style.marginTop = "8px";
+        legende.style.fontSize = "14px";
+        legende.style.lineHeight = "1.45";
+
+        if (commentaire) {
+          const texte = document.createElement("div");
+          texte.textContent = commentaire;
+          texte.style.fontWeight = "bold";
+          legende.appendChild(texte);
+        }
+
+        if (lieu) {
+          const endroit = document.createElement("div");
+          endroit.textContent = "📍 " + lieu;
+          legende.appendChild(endroit);
+        }
+
+        if (nom) {
+          const auteur = document.createElement("div");
+          auteur.textContent = "📷 Photo de " + nom;
+          legende.appendChild(auteur);
+        }
+
+        carte.appendChild(legende);
+      }
+
+      galerie.appendChild(carte);
     });
 
   } catch (e) {
