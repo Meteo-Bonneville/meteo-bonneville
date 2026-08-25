@@ -735,7 +735,7 @@ document.getElementById("pollen-contenu").innerHTML =
         const boutonPollen = document.querySelector('a[onclick*="togglePollen"]');
         const parentRect = pollen.parentElement.getBoundingClientRect();
         const boutonRect = boutonPollen.getBoundingClientRect();
-        pollen.style.marginLeft = Math.max(0, boutonRect.left - parentRect.left) + "px";
+        pollen.style.marginLeft = "auto"; pollen.style.marginRight = "auto";
     } else {
         pollen.style.display = "none";
     }
@@ -758,7 +758,7 @@ function toggleAir() {
         const boutonAir = document.querySelector('a[onclick*="toggleAir"]');
         const parentRect = air.parentElement.getBoundingClientRect();
         const boutonRect = boutonAir.getBoundingClientRect();
-        air.style.marginLeft = Math.max(0, boutonRect.left - parentRect.left) + "px";
+        air.style.marginLeft = "auto"; air.style.marginRight = "auto";
         chargerAir();
     } else {
         air.style.display = "none";
