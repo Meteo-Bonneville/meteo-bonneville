@@ -1,7 +1,7 @@
 {
   "ville": "Bonneville",
-  "aqi": 26,
-  "niveau": "Bon",
-  "couleur": "vert",
+  "aqi": 53,
+  "niveau": "Modéré",
+  "couleur": "jaune",
   "polluant": "p2"
 }
