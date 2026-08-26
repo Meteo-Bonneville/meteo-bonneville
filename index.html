@@ -200,6 +200,8 @@ menu-deroulant{
 
 </style>
 
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 </head>
 
 <body>
@@ -482,8 +484,7 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
 <div id="contact" style="display:none;max-width:700px;margin:35px auto;padding:22px;background:#20272f;border-radius:16px;text-align:left;">
   <h2 style="color:#55c7ff;text-align:center;">✉️ Contact</h2>
 
-  <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
-    <input type="hidden" name="access_key" value="9db64f06-bd90-439c-9a01-4f9274b50761">
+  <form id="contact-form">
     <input type="hidden" name="subject" value="Nouveau message - Station Météo Bonneville">
 
     <label>Nom ou pseudo</label>
@@ -523,6 +524,8 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
       <input type="checkbox" name="proposition_photo" value="Oui">
       📸 Je souhaite proposer une photo météo
     </label>
+
+<div class="cf-turnstile" data-sitekey="0x4AAAAAAEc5pUCwjznNFXUF" style="margin:18px 0;display:flex;justify-content:center;"></div>
 
     <button type="submit"
       style="display:block;margin:auto;padding:12px 24px;border:0;border-radius:10px;background:#1565c0;color:white;font-size:16px;font-weight:bold;">
@@ -998,58 +1001,97 @@ fetch("https://meteo-bonneville.goatcounter.com/counter/TOTAL.json")
 
 <script>
 document.getElementById("contact-form").addEventListener("submit", async function(e) {
-  const fichier = document.getElementById("photo-fichier").files[0];
-
-  if (!fichier) return;
-
   e.preventDefault();
 
+  const form = this;
   const statut = document.getElementById("photo-statut");
-  statut.textContent = "📤 Envoi de la photo en cours...";
+  const bouton = form.querySelector('button[type="submit"]');
+  const token = form.querySelector('[name="cf-turnstile-response"]')?.value || "";
+
+  if (!token) {
+    statut.textContent = "❌ Veuillez effectuer la vérification anti-robot.";
+    return;
+  }
+
+  bouton.disabled = true;
 
   try {
-    const data = new FormData();
-    data.append("file", fichier);
-    data.append("upload_preset", "Meteo-Bonneville-Photos");
-    data.append("tags", "meteo-bonneville");
+    let photoUrl = "";
+    const fichier = document.getElementById("photo-fichier").files[0];
 
-    const r = await fetch(
-      "https://api.cloudinary.com/v1_1/m4mbgxa1/image/upload",
-      { method: "POST", body: data }
-    );
+    if (fichier) {
+      statut.textContent = "📤 Envoi de la photo en cours...";
 
-    if (!r.ok) throw new Error("Erreur Cloudinary");
+      const data = new FormData();
+      data.append("file", fichier);
+      data.append("upload_preset", "Meteo-Bonneville-Photos");
+      data.append("tags", "meteo-bonneville");
 
-    const resultat = await r.json();
-    document.getElementById("photo-url").value = resultat.secure_url;
+      const r = await fetch(
+        "https://api.cloudinary.com/v1_1/m4mbgxa1/image/upload",
+        { method: "POST", body: data }
+      );
 
-    const notification = await fetch(
-      "https://super-snow-a20b.sylgrosjean17.workers.dev/notify",
+      if (!r.ok) throw new Error("Erreur Cloudinary");
+
+      const resultat = await r.json();
+      photoUrl = resultat.secure_url;
+      document.getElementById("photo-url").value = photoUrl;
+
+      const notification = await fetch(
+        "https://super-snow-a20b.sylgrosjean17.workers.dev/notify",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            asset_id: resultat.asset_id,
+            secure_url: resultat.secure_url,
+            nom: form.querySelector('[name="name"]')?.value || "",
+            lieu: form.querySelector('[name="photo_lieu"]')?.value || "",
+            commentaire: form.querySelector('[name="photo_commentaire"]')?.value || ""
+          })
+        }
+      );
+
+      if (!notification.ok) throw new Error("Erreur notification photo");
+    }
+
+    statut.textContent = "📨 Envoi du message en cours...";
+
+    const proposition = form.querySelector('[name="proposition_photo"]');
+
+    const contactResponse = await fetch(
+      "https://super-snow-a20b.sylgrosjean17.workers.dev/contact",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          asset_id: resultat.asset_id,
-          secure_url: resultat.secure_url,
-          nom: document.querySelector('[name="name"]')?.value || "",
-          lieu: document.querySelector('[name="photo_lieu"]')?.value || "",
-          commentaire: document.querySelector('[name="photo_commentaire"]')?.value || ""
+          "cf-turnstile-response": token,
+          name: form.querySelector('[name="name"]')?.value || "",
+          email: form.querySelector('[name="email"]')?.value || "",
+          message: form.querySelector('[name="message"]')?.value || "",
+          photo_lieu: form.querySelector('[name="photo_lieu"]')?.value || "",
+          photo_commentaire: form.querySelector('[name="photo_commentaire"]')?.value || "",
+          photo_url: photoUrl,
+          proposition_photo: proposition?.checked ? "Oui" : ""
         })
       }
     );
 
-    if (!notification.ok) {
-      const erreur = await notification.text();
-      throw new Error("Notification : " + erreur);
+    if (!contactResponse.ok) {
+      throw new Error(await contactResponse.text());
     }
 
-    statut.textContent = "✅ Photo envoyée.";
-    this.submit();
+    statut.textContent = "✅ Message envoyé.";
+    form.reset();
+
+    if (window.turnstile) turnstile.reset();
 
   } catch (err) {
-    statut.textContent = "❌ Impossible d'envoyer la photo. Réessayez.";
+    statut.textContent = "❌ Impossible d'envoyer le message. Réessayez.";
+    if (window.turnstile) turnstile.reset();
+  } finally {
+    bouton.disabled = false;
   }
 });
 </script>
