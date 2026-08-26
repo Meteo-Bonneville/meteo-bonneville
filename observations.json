@@ -1,20 +1,20 @@
 {
-    "date": "2026-08-26 15:19:50",
-    "temperature": 29.0,
+    "date": "2026-08-26 15:24:48",
+    "temperature": 29.7,
     "temp_max_jour": 29.8,
     "heure_temp_max": "14:49",
     "heure_temp_min": "07:04",
     "temp_min_jour": 17.0,
-    "humidite": 51.7,
+    "humidite": 51,
     "pression": 1014.9,
-    "vent": 5.3,
-    "rafale": 5.3,
+    "vent": 4.7,
+    "rafale": 4.7,
     "rafale_max_jour": 17.7,
     "heure_rafale_max": "15:14",
-    "direction": 237,
-    "point_rosee": 18.1,
+    "direction": 226,
+    "point_rosee": 18.4,
     "pluie_h": 0.0,
     "pluie_totale": 0.0,
     "uv": 7,
-    "rayonnement": 746
+    "rayonnement": 699.1
 }
