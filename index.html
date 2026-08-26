@@ -852,6 +852,10 @@ zone.innerHTML = `
 }
 }
 
+
+chargerAir();
+setInterval(chargerAir, 5 * 60 * 1000);
+
 function togglePrevisions() {
     const previsions = document.getElementById("previsions");
     const doitOuvrir = previsions.style.display !== "block";
