@@ -380,6 +380,13 @@ Chargement des prévisions météo...
   <div style="position:relative; width:100%; height:380px;">
     <canvas id="graphique-temperature"></canvas>
   </div>
+
+
+  <h3 style="margin-top:30px;">💧 Humidité — dernières 24 h</h3>
+
+  <div style="position:relative; width:100%; height:320px;">
+    <canvas id="graphique-humidite"></canvas>
+  </div>
 </section>
 
 <div id="vigilance" class="bloc-menu" style="display:none;">
@@ -1417,6 +1424,7 @@ function toggleGraphiques(event) {
 
     if (!graphiqueTemperatureCharge) {
       chargerGraphiqueTemperature();
+      chargerGraphiqueHumidite();
       graphiqueTemperatureCharge = true;
     }
 
@@ -1426,6 +1434,71 @@ function toggleGraphiques(event) {
 
   } else {
     bloc.style.display = "none";
+  }
+}
+
+
+async function chargerGraphiqueHumidite() {
+  try {
+    const r = await fetch("graphique_humidite.json?t=" + Date.now());
+    if (!r.ok) throw new Error("HTTP " + r.status);
+
+    const j = await r.json();
+    const d = j.donnees || [];
+
+    const labels = d.map(x => {
+      const date = new Date(x.heure);
+      return date.toLocaleTimeString("fr-FR", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    });
+
+    const humidite = d.map(x => x.humidite);
+
+    new Chart(
+      document.getElementById("graphique-humidite"),
+      {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Humidité %",
+              data: humidite,
+              borderWidth: 2,
+              pointRadius: 0,
+              tension: 0.25
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: "index",
+            intersect: false
+          },
+          scales: {
+            x: {
+              ticks: {
+                maxTicksLimit: 12
+              }
+            },
+            y: {
+              min: 0,
+              max: 100,
+              title: {
+                display: true,
+                text: "%"
+              }
+            }
+          }
+        }
+      }
+    );
+  } catch (e) {
+    console.error("Erreur graphique humidité :", e);
   }
 }
 </script>
