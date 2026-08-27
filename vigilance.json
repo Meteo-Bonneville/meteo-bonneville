@@ -2,9 +2,9 @@
   "meteo": {
     "departement": "Haute-Savoie (74)",
     "alertes": [
-      "🟡 orages — Vigilance jaune",
       "🟡 vent — Vigilance jaune",
-      "🟡 pluie — Vigilance jaune"
+      "🟡 pluie — Vigilance jaune",
+      "🟡 orages — Vigilance jaune"
     ]
   },
   "vigicrues": {
@@ -12,5 +12,5 @@
     "symbole": "🟢",
     "texte": "Vigilance verte"
   },
-  "mise_a_jour": "27/08/2026 16:40"
+  "mise_a_jour": "27/08/2026 16:45"
 }
