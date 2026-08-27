@@ -373,6 +373,15 @@ Chargement des prévisions météo...
   </div>
 </div>
 
+<section id="graphiques" class="carte" style="margin-top:25px; display:none;">
+  <h2>📊 Graphiques</h2>
+  <h3>🌡️ Température et point de rosée — dernières 24 h</h3>
+
+  <div style="position:relative; width:100%; height:380px;">
+    <canvas id="graphique-temperature"></canvas>
+  </div>
+</section>
+
 <div id="vigilance" class="bloc-menu" style="display:none;">
 <div id="vigilance-meteo-bloc" class="carte" style="display:none;">
   <h2>⚠️ Vigilance météo</h2>
@@ -1318,14 +1327,7 @@ setInterval(chargerHistoriqueMois, 10 * 60 * 1000);
 </script>
 
 
-<section id="graphiques" class="carte" style="margin-top:25px; display:none;">
-  <h2>📊 Graphiques</h2>
-  <h3>🌡️ Température et point de rosée — dernières 24 h</h3>
 
-  <div style="position:relative; width:100%; height:380px;">
-    <canvas id="graphique-temperature"></canvas>
-  </div>
-</section>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
