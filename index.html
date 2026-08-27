@@ -387,6 +387,13 @@ Chargement des prévisions météo...
   <div style="position:relative; width:100%; height:320px;">
     <canvas id="graphique-humidite"></canvas>
   </div>
+
+
+  <h3 style="margin-top:30px;">🌬️ Vent et rafales — dernières 24 h</h3>
+
+  <div style="position:relative; width:100%; height:320px;">
+    <canvas id="graphique-vent"></canvas>
+  </div>
 </section>
 
 <div id="vigilance" class="bloc-menu" style="display:none;">
@@ -1425,6 +1432,7 @@ function toggleGraphiques(event) {
     if (!graphiqueTemperatureCharge) {
       chargerGraphiqueTemperature();
       chargerGraphiqueHumidite();
+      chargerGraphiqueVent();
       graphiqueTemperatureCharge = true;
     }
 
@@ -1499,6 +1507,77 @@ async function chargerGraphiqueHumidite() {
     );
   } catch (e) {
     console.error("Erreur graphique humidité :", e);
+  }
+}
+
+
+async function chargerGraphiqueVent() {
+  try {
+    const r = await fetch("graphique_vent.json?t=" + Date.now());
+    if (!r.ok) throw new Error("HTTP " + r.status);
+
+    const d = await r.json();
+
+    const labels = d.map(x => {
+      const date = new Date(x.heure);
+      return date.toLocaleTimeString("fr-FR", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    });
+
+    const vent = d.map(x => x.vent);
+    const rafales = d.map(x => x.rafale);
+
+    new Chart(
+      document.getElementById("graphique-vent"),
+      {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Vent moyen km/h",
+              data: vent,
+              borderWidth: 2,
+              pointRadius: 0,
+              tension: 0.25
+            },
+            {
+              label: "Rafales km/h",
+              data: rafales,
+              borderWidth: 2,
+              pointRadius: 0,
+              tension: 0.25
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: "index",
+            intersect: false
+          },
+          scales: {
+            x: {
+              ticks: {
+                maxTicksLimit: 12
+              }
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: "km/h"
+              }
+            }
+          }
+        }
+      }
+    );
+  } catch (e) {
+    console.error("Erreur graphique vent :", e);
   }
 }
 </script>
