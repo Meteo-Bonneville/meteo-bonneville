@@ -1317,6 +1317,92 @@ chargerHistoriqueMois();
 setInterval(chargerHistoriqueMois, 10 * 60 * 1000);
 </script>
 
+
+<section id="graphiques" class="carte" style="margin-top:25px;">
+  <h2>📊 Graphiques</h2>
+  <h3>🌡️ Température et point de rosée — dernières 24 h</h3>
+
+  <div style="position:relative; width:100%; height:380px;">
+    <canvas id="graphique-temperature"></canvas>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+async function chargerGraphiqueTemperature() {
+  try {
+    const r = await fetch("graphique_temperature.json?t=" + Date.now());
+    if (!r.ok) throw new Error("HTTP " + r.status);
+
+    const j = await r.json();
+    const d = j.donnees || [];
+
+    const labels = d.map(x => {
+      const date = new Date(x.heure);
+      return date.toLocaleTimeString("fr-FR", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    });
+
+    const temperatures = d.map(x => x.temperature);
+    const rosee = d.map(x => x.point_rosee);
+
+    new Chart(
+      document.getElementById("graphique-temperature"),
+      {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Température °C",
+              data: temperatures,
+              borderWidth: 2,
+              pointRadius: 0,
+              tension: 0.25
+            },
+            {
+              label: "Point de rosée °C",
+              data: rosee,
+              borderWidth: 2,
+              pointRadius: 0,
+              tension: 0.25
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: "index",
+            intersect: false
+          },
+          scales: {
+            x: {
+              ticks: {
+                maxTicksLimit: 12
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: "°C"
+              }
+            }
+          }
+        }
+      }
+    );
+  } catch (e) {
+    console.error("Erreur graphique température :", e);
+  }
+}
+
+chargerGraphiqueTemperature();
+</script>
+
 </body>
 
 </html>
