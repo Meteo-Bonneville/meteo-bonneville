@@ -1,0 +1,9 @@
+{
+  "periode_debut": "20260801",
+  "periode_fin": "20260827",
+  "nombre_releves": 642,
+  "temperature_min": 11.5,
+  "temperature_max": 37.2,
+  "rafale_max": 62.0,
+  "pluie_cumulee": 98.29
+}
