@@ -344,7 +344,34 @@ Chargement des prévisions météo...
   <div class="nombre" id="pluie_jour">-- mm</div>
 </div>
 
+
 </details>
+
+<div id="historique-mois" class="carte">
+  <h2>📊 Historique du mois</h2>
+
+  <div class="grille">
+    <div class="valeur">
+      <h3>❄️ Température mini</h3>
+      <div class="nombre" id="hist-temp-min">-- °C</div>
+    </div>
+
+    <div class="valeur">
+      <h3>🔥 Température maxi</h3>
+      <div class="nombre" id="hist-temp-max">-- °C</div>
+    </div>
+
+    <div class="valeur">
+      <h3>💨 Rafale maximale</h3>
+      <div class="nombre" id="hist-rafale-max">-- km/h</div>
+    </div>
+
+    <div class="valeur">
+      <h3>🌧️ Pluie du mois</h3>
+      <div class="nombre" id="hist-pluie">-- mm</div>
+    </div>
+  </div>
+</div>
 
 <div id="vigilance" class="bloc-menu" style="display:none;">
 <div id="vigilance-meteo-bloc" class="carte" style="display:none;">
@@ -1258,6 +1285,36 @@ async function chargerGaleriePhotos() {
 }
 
 document.addEventListener("DOMContentLoaded", chargerGaleriePhotos);
+</script>
+
+
+<script id="script-historique-mois">
+async function chargerHistoriqueMois() {
+  try {
+    const r = await fetch("historique_mois.json?t=" + Date.now());
+    if (!r.ok) throw new Error("HTTP " + r.status);
+
+    const d = await r.json();
+
+    document.getElementById("hist-temp-min").textContent =
+      Number(d.temperature_min).toFixed(1) + " °C";
+
+    document.getElementById("hist-temp-max").textContent =
+      Number(d.temperature_max).toFixed(1) + " °C";
+
+    document.getElementById("hist-rafale-max").textContent =
+      Number(d.rafale_max).toFixed(1) + " km/h";
+
+    document.getElementById("hist-pluie").textContent =
+      Number(d.pluie_cumulee).toFixed(2) + " mm";
+
+  } catch (e) {
+    console.error("Erreur historique mensuel :", e);
+  }
+}
+
+chargerHistoriqueMois();
+setInterval(chargerHistoriqueMois, 10 * 60 * 1000);
 </script>
 
 </body>
