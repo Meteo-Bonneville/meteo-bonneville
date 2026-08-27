@@ -229,7 +229,7 @@ menu-deroulant{
   <a href="#" onclick="toggleAir(); return false;">🏭 Qualité de l'air</a>
   <a href="#" onclick="togglePollen(); return false;">🌿 Allergies / Pollens</a>
   <a href="#" onclick="togglePrevisions(); return false;">🌤️ Prévisions</a>
-  <a href="#graphiques">📊 Graphiques</a>
+  <a href="#graphiques" onclick="toggleGraphiques(event)">📊 Graphiques</a>
 <a href="#contact">✉️ Contact</a>
 <a href="#photos">📸 Galerie Photos</a>
 </nav>
@@ -1318,7 +1318,7 @@ setInterval(chargerHistoriqueMois, 10 * 60 * 1000);
 </script>
 
 
-<section id="graphiques" class="carte" style="margin-top:25px;">
+<section id="graphiques" class="carte" style="margin-top:25px; display:none;">
   <h2>📊 Graphiques</h2>
   <h3>🌡️ Température et point de rosée — dernières 24 h</h3>
 
@@ -1400,7 +1400,32 @@ async function chargerGraphiqueTemperature() {
   }
 }
 
-chargerGraphiqueTemperature();
+let graphiqueTemperatureCharge = false;
+
+function toggleGraphiques(event) {
+  if (event) event.preventDefault();
+
+  const bloc = document.getElementById("graphiques");
+  if (!bloc) return;
+
+  const ferme = window.getComputedStyle(bloc).display === "none";
+
+  if (ferme) {
+    bloc.style.display = "block";
+
+    if (!graphiqueTemperatureCharge) {
+      chargerGraphiqueTemperature();
+      graphiqueTemperatureCharge = true;
+    }
+
+    setTimeout(() => {
+      bloc.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+
+  } else {
+    bloc.style.display = "none";
+  }
+}
 </script>
 
 </body>
