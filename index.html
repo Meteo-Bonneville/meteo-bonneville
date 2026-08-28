@@ -212,6 +212,45 @@ menu-deroulant{
 }
 </style>
 
+
+<style id="style-sous-menu-graphiques">
+#sous-menu-graphiques {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 12px auto 20px auto !important;
+  box-sizing: border-box;
+}
+
+#sous-menu-graphiques .graph-submenu-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+#sous-menu-graphiques a,
+#sous-menu-graphiques a:visited {
+  display: block;
+  width: 82%;
+  max-width: 520px;
+  box-sizing: border-box;
+  padding: 15px 18px;
+  background: #202933;
+  color: #48c2f5;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-radius: 14px;
+}
+
+#sous-menu-graphiques a:hover,
+#sous-menu-graphiques a:active {
+  background: #273440;
+}
+</style>
+
 </head>
 
 <body>
@@ -246,9 +285,9 @@ menu-deroulant{
 
 <div id="sous-menu-graphiques" class="sous-menu"
      style="display:none; width:90%; max-width:90%; margin-left:auto; margin-right:auto; box-sizing:border-box;">
-  <div style="display:flex; flex-direction:column; gap:8px;">
+  <div class="graph-submenu-inner">
     <a href="#graphiques" onclick="toggleGraphiques(event)">📈 Graphiques 24 h</a>
-    <a href="#" onclick="event.preventDefault(); alert('Graphiques 7 jours : création en cours');">📅 Graphiques 7 jours</a>
+    <a href="#" onclick="toggleGraphiques7Jours(event)">📅 Graphiques 7 jours</a>
     <a href="#" onclick="event.preventDefault(); alert('Graphiques mensuels : création en cours');">🗓️ Graphiques mensuels</a>
   </div>
 </div>
