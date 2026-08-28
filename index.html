@@ -2085,3 +2085,33 @@ async function chargerGraphiques7Jours() {
   }
 }
 </style>
+
+<style>
+/* Harmonisation des sous-menus avec le menu Graphiques */
+#affichage-vigilance a,
+#affichage-cartes a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 82% !important;
+    max-width: 650px !important;
+    min-height: 70px !important;
+    margin: 12px auto !important;
+    padding: 12px 18px !important;
+    box-sizing: border-box !important;
+
+    background: #1f2b36 !important;
+    color: #4fc3f7 !important;
+    border: none !important;
+    border-radius: 18px !important;
+
+    text-align: center !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+}
+
+#affichage-vigilance a:hover,
+#affichage-cartes a:hover {
+    filter: brightness(1.12);
+}
+</style>
