@@ -239,10 +239,20 @@ menu-deroulant{
   <a href="#" onclick="toggleAir(); return false;">🏭 Qualité de l'air</a>
   <a href="#" onclick="togglePollen(); return false;">🌿 Allergies / Pollens</a>
   <a href="#" onclick="togglePrevisions(); return false;">🌤️ Prévisions</a>
-  <a href="#graphiques" onclick="toggleGraphiques(event)">📊 Graphiques</a>
+  <a href="#" onclick="toggleSousMenuGraphiques(event)">📊 Graphiques</a>
 <a href="#contact">✉️ Contact</a>
 <a href="#photos">📸 Galerie Photos</a>
 </nav>
+
+<div id="sous-menu-graphiques" class="sous-menu"
+     style="display:none; width:90%; max-width:90%; margin-left:auto; margin-right:auto; box-sizing:border-box;">
+  <div style="display:flex; flex-direction:column; gap:8px;">
+    <a href="#graphiques" onclick="toggleGraphiques(event)">📈 Graphiques 24 h</a>
+    <a href="#" onclick="event.preventDefault(); alert('Graphiques 7 jours : création en cours');">📅 Graphiques 7 jours</a>
+    <a href="#" onclick="event.preventDefault(); alert('Graphiques mensuels : création en cours');">🗓️ Graphiques mensuels</a>
+  </div>
+</div>
+
 <div id="sous-menu-pollen" class="sous-menu" style="display:none; width:90%; max-width:90%; margin-left:auto; margin-right:auto; box-sizing:border-box;">
   <div id="pollen-contenu">
     🌿 Allergies / Pollens : chargement...
@@ -1717,6 +1727,20 @@ async function chargerGraphiquePluie() {
   } catch (e) {
     console.error("Erreur graphique pluie :", e);
   }
+}
+
+
+
+function toggleSousMenuGraphiques(event) {
+  event.preventDefault();
+
+  const menu = document.getElementById("sous-menu-graphiques");
+  if (!menu) return;
+
+  menu.style.display =
+    menu.style.display === "none" || menu.style.display === ""
+      ? "block"
+      : "none";
 }
 
 </script>
