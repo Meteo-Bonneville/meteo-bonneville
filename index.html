@@ -2368,3 +2368,59 @@ async function chargerGraphiquesMois() {
 }
 
 </style>
+
+<style>
+/* === SOUS-MENUS VIGILANCE + CARTES : même style que GRAPHIQUES === */
+
+#affichage-vigilance,
+#affichage-cartes {
+    width: 100% !important;
+    background: transparent !important;
+}
+
+/* Tous les boutons/liens des deux sous-menus */
+#affichage-vigilance a,
+#affichage-cartes a,
+#affichage-vigilance button,
+#affichage-cartes button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 82% !important;
+    max-width: 650px !important;
+    min-height: 70px !important;
+
+    margin: 12px auto !important;
+    padding: 12px 18px !important;
+
+    box-sizing: border-box !important;
+
+    background: #1f2b36 !important;
+    color: #4fc3f7 !important;
+
+    border: none !important;
+    border-radius: 18px !important;
+
+    text-align: center !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+}
+
+/* Empêche les anciens styles blancs de reprendre le dessus */
+#affichage-vigilance a:link,
+#affichage-vigilance a:visited,
+#affichage-cartes a:link,
+#affichage-cartes a:visited {
+    background: #1f2b36 !important;
+    color: #4fc3f7 !important;
+}
+
+#affichage-vigilance a:hover,
+#affichage-cartes a:hover,
+#affichage-vigilance button:hover,
+#affichage-cartes button:hover {
+    filter: brightness(1.12);
+}
+</style>
+
