@@ -2237,6 +2237,136 @@ if ("serviceWorker" in navigator) {
 }
 </script>
 
+
+<!-- POPUP INSTALLATION METEO BONNEVILLE -->
+<style>
+#install-popup-overlay {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  background:rgba(0,0,0,.68);
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+#install-popup {
+  width:min(390px, 92vw);
+  background:#0d1f2d;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 18px 55px rgba(0,0,0,.45);
+  font-family:inherit;
+  text-align:center;
+}
+#install-popup img {
+  width:72px;
+  height:72px;
+  border-radius:16px;
+  margin-bottom:8px;
+}
+#install-popup h3 {
+  margin:4px 0 10px;
+  font-size:1.2rem;
+}
+#install-popup p {
+  margin:8px 0;
+  line-height:1.4;
+  font-size:.95rem;
+}
+#install-popup .install-steps {
+  background:#142d40;
+  border-radius:14px;
+  padding:12px;
+  margin:14px 0;
+}
+#install-popup label {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:center;
+  font-size:.88rem;
+  margin:12px 0;
+}
+#install-popup button {
+  border:0;
+  border-radius:12px;
+  padding:11px 18px;
+  font-weight:700;
+  cursor:pointer;
+}
+#install-close {
+  background:#2196f3;
+  color:white;
+  width:100%;
+}
+</style>
+
+<div id="install-popup-overlay">
+  <div id="install-popup" style="position:relative;">
+<button id="install-x" aria-label="Fermer" style="position:absolute;top:10px;right:12px;background:transparent;color:#fff;font-size:1.5rem;padding:4px 8px;width:auto;">✕</button>
+    <img src="icon-192.png" alt="Météo Bonneville">
+    <h3>📱 Installez Météo Bonneville</h3>
+    <p>Accédez directement à la station depuis votre écran d’accueil, comme une application.</p>
+
+    <div class="install-steps" id="install-ios">
+      🍎 <strong>iPhone / iPad</strong><br><br>
+      Safari → <strong>Partager</strong> → <strong>Sur l’écran d’accueil</strong> → <strong>Ajouter</strong>
+    </div>
+
+    <div class="install-steps" id="install-android">
+      🤖 <strong>Android / Samsung</strong><br><br>
+      Ouvrez le site dans Chrome ou Samsung Internet → menu → <strong>Installer l’application</strong> ou <strong>Ajouter à l’écran d’accueil</strong>
+    </div>
+
+    <label>
+      <input type="checkbox" id="install-never">
+      Ne plus afficher ce message
+    </label>
+
+    <button id="install-close">J’ai compris</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  const standalone =
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true;
+
+  const ua = navigator.userAgent || "";
+  const ios = /iPhone|iPad|iPod/i.test(ua);
+  const android = /Android/i.test(ua);
+
+  if (standalone || (!ios && !android)) return;
+  if (localStorage.getItem("meteoInstallPopupHidden") === "1") return;
+
+  const overlay = document.getElementById("install-popup-overlay");
+  const iosBox = document.getElementById("install-ios");
+  const androidBox = document.getElementById("install-android");
+
+  iosBox.style.display = ios ? "block" : "none";
+  androidBox.style.display = android ? "block" : "none";
+
+  setTimeout(function () {
+    overlay.style.display = "flex";
+  }, 1200);
+
+  document.getElementById("install-x").addEventListener("click", function () {
+    overlay.style.display = "none";
+  });
+
+  document.getElementById("install-close").addEventListener("click", function () {
+    if (document.getElementById("install-never").checked) {
+      localStorage.setItem("meteoInstallPopupHidden", "1");
+    }
+    overlay.style.display = "none";
+  });
+})();
+</script>
+
 </body>
 
 </html>
