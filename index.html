@@ -2424,3 +2424,43 @@ async function chargerGraphiquesMois() {
 }
 </style>
 
+
+<style id="style-boutons-cartes-vigilance-exacts">
+
+button[onclick*="afficherCarte"],
+button[onclick*="afficherVigilance"] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 82% !important;
+    max-width: 650px !important;
+    min-height: 70px !important;
+
+    margin: 12px auto !important;
+    padding: 12px 18px !important;
+
+    box-sizing: border-box !important;
+
+    background: #1f2b36 !important;
+    color: #4fc3f7 !important;
+
+    border: none !important;
+    border-radius: 18px !important;
+
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+
+    text-align: center !important;
+
+    appearance: none !important;
+    -webkit-appearance: none !important;
+}
+
+button[onclick*="afficherCarte"]:hover,
+button[onclick*="afficherVigilance"]:hover {
+    filter: brightness(1.12);
+}
+
+</style>
+
