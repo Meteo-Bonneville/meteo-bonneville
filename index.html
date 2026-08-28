@@ -202,6 +202,16 @@ menu-deroulant{
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
+
+<style>
+.date-record {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  font-style: italic;
+}
+</style>
+
 </head>
 
 <body>
@@ -354,16 +364,19 @@ Chargement des prévisions météo...
     <div class="valeur">
       <h3>❄️ Température mini</h3>
       <div class="nombre" id="hist-temp-min">-- °C</div>
+<div class="date-record" id="hist-date-temp-min"></div>
     </div>
 
     <div class="valeur">
       <h3>🔥 Température maxi</h3>
       <div class="nombre" id="hist-temp-max">-- °C</div>
+<div class="date-record" id="hist-date-temp-max"></div>
     </div>
 
     <div class="valeur">
       <h3>💨 Rafale maximale</h3>
       <div class="nombre" id="hist-rafale-max">-- km/h</div>
+<div class="date-record" id="hist-date-rafale-max"></div>
     </div>
 
     <div class="valeur">
@@ -1330,6 +1343,26 @@ async function chargerHistoriqueMois() {
 
     document.getElementById("hist-pluie").textContent =
       Number(d.pluie_cumulee).toFixed(2) + " mm";
+
+    const formaterDateRecord = (dateStr) => {
+      if (!dateStr) return "";
+      const [annee, mois, jour] = dateStr.split("-");
+      const date = new Date(Number(annee), Number(mois) - 1, Number(jour));
+      return "le " + date.toLocaleDateString("fr-FR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+    };
+
+    document.getElementById("hist-date-temp-min").textContent =
+      formaterDateRecord(d.date_temperature_min);
+
+    document.getElementById("hist-date-temp-max").textContent =
+      formaterDateRecord(d.date_temperature_max);
+
+    document.getElementById("hist-date-rafale-max").textContent =
+      formaterDateRecord(d.date_rafale_max);
 
   } catch (e) {
     console.error("Erreur historique mensuel :", e);
