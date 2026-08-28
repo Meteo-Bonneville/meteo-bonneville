@@ -431,6 +431,38 @@ Chargement des prévisions météo...
 
 </section>
 
+<section id="graphiques-7jours" class="carte" style="margin-top:25px; display:none;">
+
+  <h2>📊 Graphiques — 7 derniers jours</h2>
+
+  <h3 style="margin-top:30px;">🌡️ Température et point de rosée — 7 jours</h3>
+  <div style="position:relative; width:100%; height:320px;">
+    <canvas id="graphique-temperature-7jours"></canvas>
+  </div>
+
+  <h3 style="margin-top:30px;">💧 Humidité — 7 jours</h3>
+  <div style="position:relative; width:100%; height:320px;">
+    <canvas id="graphique-humidite-7jours"></canvas>
+  </div>
+
+  <h3 style="margin-top:30px;">🌬️ Vent et rafales — 7 jours</h3>
+  <div style="position:relative; width:100%; height:320px;">
+    <canvas id="graphique-vent-7jours"></canvas>
+  </div>
+
+  <h3 style="margin-top:30px;">🌡️ Pression atmosphérique — 7 jours</h3>
+  <div style="position:relative; width:100%; height:320px;">
+    <canvas id="graphique-pression-7jours"></canvas>
+  </div>
+
+  <h3 style="margin-top:30px;">🌧️ Cumul de pluie — 7 jours</h3>
+  <div style="position:relative; width:100%; height:320px;">
+    <canvas id="graphique-pluie-7jours"></canvas>
+  </div>
+
+</section>
+
+
 <div id="vigilance" class="bloc-menu" style="display:none;">
 <div id="vigilance-meteo-bloc" class="carte" style="display:none;">
   <h2>⚠️ Vigilance météo</h2>
@@ -1741,6 +1773,195 @@ function toggleSousMenuGraphiques(event) {
     menu.style.display === "none" || menu.style.display === ""
       ? "block"
       : "none";
+}
+
+
+
+let graphiques7JoursCharges = false;
+
+async function toggleGraphiques7Jours(event) {
+  if (event) event.preventDefault();
+
+  const section = document.getElementById("graphiques-7jours");
+  if (!section) return;
+
+  const ouvrir = section.style.display === "none" || section.style.display === "";
+
+  document.getElementById("graphiques")?.style.setProperty("display", "none");
+
+  section.style.display = ouvrir ? "block" : "none";
+
+  if (ouvrir) {
+    section.scrollIntoView({behavior:"smooth", block:"start"});
+
+    if (!graphiques7JoursCharges) {
+      await chargerGraphiques7Jours();
+      graphiques7JoursCharges = true;
+    }
+  }
+}
+
+async function chargerGraphiques7Jours() {
+
+  const charger = async (fichier) => {
+    const r = await fetch(fichier + "?t=" + Date.now());
+    if (!r.ok) throw new Error(fichier + " : HTTP " + r.status);
+    return await r.json();
+  };
+
+  try {
+
+    const [temperature, humidite, vent, pression, pluie] =
+      await Promise.all([
+        charger("graphique_temperature_7jours.json"),
+        charger("graphique_humidite_7jours.json"),
+        charger("graphique_vent_7jours.json"),
+        charger("graphique_pression_7jours.json"),
+        charger("graphique_pluie_7jours.json")
+      ]);
+
+    const heures = (data) =>
+      data.map(x => {
+        const d = new Date(x.heure);
+        return d.toLocaleString("fr-FR", {
+          weekday:"short",
+          hour:"2-digit",
+          minute:"2-digit"
+        });
+      });
+
+    new Chart(document.getElementById("graphique-temperature-7jours"), {
+      type:"line",
+      data:{
+        labels:heures(temperature),
+        datasets:[
+          {
+            label:"Température °C",
+            data:temperature.map(x => x.temperature),
+            pointRadius:0,
+            tension:0.25
+          },
+          {
+            label:"Point de rosée °C",
+            data:temperature.map(x => x.point_rosee),
+            pointRadius:0,
+            tension:0.25
+          }
+        ]
+      },
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        interaction:{mode:"index", intersect:false},
+        scales:{
+          y:{title:{display:true,text:"°C"}}
+        }
+      }
+    });
+
+    new Chart(document.getElementById("graphique-humidite-7jours"), {
+      type:"line",
+      data:{
+        labels:heures(humidite),
+        datasets:[{
+          label:"Humidité %",
+          data:humidite.map(x => x.humidite),
+          pointRadius:0,
+          tension:0.25
+        }]
+      },
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        scales:{
+          y:{
+            beginAtZero:true,
+            max:100,
+            title:{display:true,text:"%"}
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("graphique-vent-7jours"), {
+      type:"line",
+      data:{
+        labels:heures(vent),
+        datasets:[
+          {
+            label:"Vent moyen km/h",
+            data:vent.map(x => x.vent),
+            pointRadius:0,
+            tension:0.25
+          },
+          {
+            label:"Rafales km/h",
+            data:vent.map(x => x.rafale),
+            pointRadius:0,
+            tension:0.25
+          }
+        ]
+      },
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        scales:{
+          y:{
+            beginAtZero:true,
+            title:{display:true,text:"km/h"}
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("graphique-pression-7jours"), {
+      type:"line",
+      data:{
+        labels:heures(pression),
+        datasets:[{
+          label:"Pression hPa",
+          data:pression.map(x => x.pression),
+          pointRadius:0,
+          tension:0.25
+        }]
+      },
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        scales:{
+          y:{title:{display:true,text:"hPa"}}
+        }
+      }
+    });
+
+    new Chart(document.getElementById("graphique-pluie-7jours"), {
+      type:"line",
+      data:{
+        labels:heures(pluie),
+        datasets:[{
+          label:"Cumul de pluie mm",
+          data:pluie.map(x => x.pluie),
+          pointRadius:0,
+          tension:0.15
+        }]
+      },
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        scales:{
+          y:{
+            beginAtZero:true,
+            title:{display:true,text:"mm"}
+          }
+        }
+      }
+    });
+
+    console.log("✅ Graphiques 7 jours chargés");
+
+  } catch (e) {
+    console.error("Erreur graphiques 7 jours :", e);
+  }
 }
 
 </script>
