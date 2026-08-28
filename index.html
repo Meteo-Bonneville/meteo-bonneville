@@ -14,6 +14,15 @@
 <meta name="geo.region" content="FR-74">
 <meta name="geo.placename" content="Bonneville">
 
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#2196f3">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Météo Bonneville">
+
 <style>
 
 body{
@@ -2214,6 +2223,17 @@ async function chargerGraphiquesMois() {
     } catch (e) {
         console.error("Erreur graphiques mensuels :", e);
     }
+}
+</script>
+
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/meteo-bonneville/service-worker.js")
+      .then(() => console.log("PWA Station météo activée"))
+      .catch(err => console.error("Erreur PWA :", err));
+  });
 }
 </script>
 

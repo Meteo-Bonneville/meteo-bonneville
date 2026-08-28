@@ -1,0 +1,30 @@
+{
+  "name": "Station météo de Bonneville",
+  "short_name": "Météo Bonneville",
+  "description": "Station météo de Bonneville (74130) - données météo en direct",
+  "start_url": "/meteo-bonneville/",
+  "scope": "/meteo-bonneville/",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#2196f3",
+  "lang": "fr",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
