@@ -288,7 +288,7 @@ menu-deroulant{
   <div class="graph-submenu-inner">
     <a href="#graphiques" onclick="toggleGraphiques(event)">📈 Graphiques 24 h</a>
     <a href="#" onclick="toggleGraphiques7Jours(event)">📅 Graphiques 7 jours</a>
-    <a href="#" onclick="event.preventDefault(); alert('Graphiques mensuels : création en cours');">🗓️ Graphiques mensuels</a>
+    <a href="#graphiques-mois" onclick="toggleGraphiquesMois(event)">🗓️ Graphiques mensuels</a>
   </div>
 </div>
 
@@ -501,6 +501,38 @@ Chargement des prévisions météo...
 
 </section>
 
+
+
+<section id="graphiques-mois" class="carte" style="margin-top:25px; display:none;">
+
+<h2>📅 Graphiques — mois en cours</h2>
+
+<h3 style="margin-top:30px;">🌡️ Température et point de rosée — mois en cours</h3>
+<div style="position:relative; width:100%; height:320px;">
+<canvas id="graphique-temperature-mois"></canvas>
+</div>
+
+<h3 style="margin-top:30px;">💧 Humidité — mois en cours</h3>
+<div style="position:relative; width:100%; height:320px;">
+<canvas id="graphique-humidite-mois"></canvas>
+</div>
+
+<h3 style="margin-top:30px;">🌬️ Vent et rafales — mois en cours</h3>
+<div style="position:relative; width:100%; height:320px;">
+<canvas id="graphique-vent-mois"></canvas>
+</div>
+
+<h3 style="margin-top:30px;">🌡️ Pression atmosphérique — mois en cours</h3>
+<div style="position:relative; width:100%; height:320px;">
+<canvas id="graphique-pression-mois"></canvas>
+</div>
+
+<h3 style="margin-top:30px;">🌧️ Pluie cumulée — mois en cours</h3>
+<div style="position:relative; width:100%; height:320px;">
+<canvas id="graphique-pluie-mois"></canvas>
+</div>
+
+</section>
 
 <div id="vigilance" class="bloc-menu" style="display:none;">
 <div id="vigilance-meteo-bloc" class="carte" style="display:none;">
@@ -2003,6 +2035,186 @@ async function chargerGraphiques7Jours() {
   }
 }
 
+</script>
+
+
+<script>
+let graphiquesMoisCharges = false;
+let chartsMois = [];
+
+async function toggleGraphiquesMois(event) {
+    event.preventDefault();
+
+    const section = document.getElementById("graphiques-mois");
+    if (!section) return;
+
+    const doitOuvrir = section.style.display === "none" || !section.style.display;
+
+    section.style.display = doitOuvrir ? "block" : "none";
+
+    if (doitOuvrir) {
+        section.scrollIntoView({behavior:"smooth", block:"start"});
+
+        if (!graphiquesMoisCharges) {
+            await chargerGraphiquesMois();
+            graphiquesMoisCharges = true;
+        }
+    }
+}
+
+async function lireMois(fichier) {
+    const r = await fetch(fichier + "?t=" + Date.now());
+    if (!r.ok) throw new Error(fichier + " : HTTP " + r.status);
+    return await r.json();
+}
+
+function optionsMois(unite, beginZero=false) {
+    return {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+            mode: "index",
+            intersect: false
+        },
+        elements: {
+            point: { radius: 0 }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    maxTicksLimit: 10
+                }
+            },
+            y: {
+                beginAtZero: beginZero,
+                title: {
+                    display: true,
+                    text: unite
+                }
+            }
+        }
+    };
+}
+
+async function chargerGraphiquesMois() {
+    try {
+        const [temperature, humidite, vent, pression, pluie] =
+            await Promise.all([
+                lireMois("graphique_temperature_mois.json"),
+                lireMois("graphique_humidite_mois.json"),
+                lireMois("graphique_vent_mois.json"),
+                lireMois("graphique_pression_mois.json"),
+                lireMois("graphique_pluie_mois.json")
+            ]);
+
+        chartsMois.forEach(c => c.destroy());
+        chartsMois = [];
+
+        chartsMois.push(new Chart(
+            document.getElementById("graphique-temperature-mois"),
+            {
+                type: "line",
+                data: {
+                    labels: temperature.map(x => x.heure),
+                    datasets: [
+                        {
+                            label: "Température °C",
+                            data: temperature.map(x => x.temperature),
+                            tension: 0.25,
+                            pointRadius: 0
+                        },
+                        {
+                            label: "Point de rosée °C",
+                            data: temperature.map(x => x.point_rosee ?? x.rosee),
+                            tension: 0.25,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: optionsMois("°C")
+            }
+        ));
+
+        chartsMois.push(new Chart(
+            document.getElementById("graphique-humidite-mois"),
+            {
+                type: "line",
+                data: {
+                    labels: humidite.map(x => x.heure),
+                    datasets: [{
+                        label: "Humidité %",
+                        data: humidite.map(x => x.humidite),
+                        tension: 0.25,
+                        pointRadius: 0
+                    }]
+                },
+                options: optionsMois("%")
+            }
+        ));
+
+        chartsMois.push(new Chart(
+            document.getElementById("graphique-vent-mois"),
+            {
+                type: "line",
+                data: {
+                    labels: vent.map(x => x.heure),
+                    datasets: [
+                        {
+                            label: "Vent moyen km/h",
+                            data: vent.map(x => x.vent),
+                            tension: 0.25,
+                            pointRadius: 0
+                        },
+                        {
+                            label: "Rafales km/h",
+                            data: vent.map(x => x.rafale),
+                            tension: 0.25,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: optionsMois("km/h", true)
+            }
+        ));
+
+        chartsMois.push(new Chart(
+            document.getElementById("graphique-pression-mois"),
+            {
+                type: "line",
+                data: {
+                    labels: pression.map(x => x.heure),
+                    datasets: [{
+                        label: "Pression hPa",
+                        data: pression.map(x => x.pression),
+                        tension: 0.25,
+                        pointRadius: 0
+                    }]
+                },
+                options: optionsMois("hPa")
+            }
+        ));
+
+        chartsMois.push(new Chart(
+            document.getElementById("graphique-pluie-mois"),
+            {
+                type: "line",
+                data: {
+                    labels: pluie.map(x => x.heure),
+                    datasets: [{
+                        label: "Cumul de pluie mm",
+                        data: pluie.map(x => x.pluie),
+                        tension: 0.25,
+                        pointRadius: 0
+                    }]
+                },
+                options: optionsMois("mm", true)
+            }
+        ));
+
+    } catch (e) {
+        console.error("Erreur graphiques mensuels :", e);
+    }
+}
 </script>
 
 </body>
