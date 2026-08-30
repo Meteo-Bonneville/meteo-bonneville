@@ -2422,14 +2422,18 @@ if ("serviceWorker" in navigator) {
 function toggleArchives(event) {
     if (event) event.preventDefault();
 
-    const menu = document.getElementById("sous-menu-archives");
-    if (!menu) return false;
+    const archives = document.getElementById("sous-menu-archives");
+    const graphiques = document.getElementById("sous-menu-graphiques");
+    const pollen = document.getElementById("sous-menu-pollen");
 
-    menu.style.display =
-        (menu.style.display === "none" || menu.style.display === "")
-        ? "block"
-        : "none";
+    if (!archives) return false;
 
+    const ouvrir = archives.style.display === "none" || archives.style.display === "";
+
+    if (graphiques) graphiques.style.display = "none";
+    if (pollen) pollen.style.display = "none";
+
+    archives.style.display = ouvrir ? "block" : "none";
     return false;
 }
 </script>
