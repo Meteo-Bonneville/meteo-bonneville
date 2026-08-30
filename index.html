@@ -260,6 +260,39 @@ menu-deroulant{
 }
 </style>
 
+
+<style id="style-archives-meteo">
+#sous-menu-archives .graph-submenu-inner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+}
+
+#sous-menu-archives a,
+#sous-menu-archives a:visited {
+    display: block;
+    width: 82%;
+    max-width: 520px;
+    box-sizing: border-box;
+    padding: 15px 18px;
+    background: #202933;
+    color: #48c2f5;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.05rem;
+    border-radius: 14px;
+}
+
+#sous-menu-archives a:hover,
+#sous-menu-archives a:active {
+    background: #273440;
+}
+</style>
+
 </head>
 
 <body>
@@ -296,9 +329,9 @@ menu-deroulant{
 <div id="sous-menu-archives" class="sous-menu"
      style="display:none; width:90%; max-width:90%; margin-left:auto; margin-right:auto; box-sizing:border-box;">
   <div class="graph-submenu-inner">
-    <a href="#" onclick="afficherArchiveMois(event, '2026-06')">📅 Juin 2026</a>
-    <a href="#" onclick="afficherArchiveMois(event, '2026-07')">📅 Juillet 2026</a>
-    <a href="#" onclick="afficherArchiveMois(event, '2026-08')">📅 Août 2026</a>
+    <a href="#" onclick="return window.afficherArchiveMois(event, '2026-06')">📅 Juin 2026</a>
+    <a href="#" onclick="return window.afficherArchiveMois(event, '2026-07')">📅 Juillet 2026</a>
+    <a href="#" onclick="return window.afficherArchiveMois(event, '2026-08')">📅 Août 2026</a>
   </div>
 </div>
 
@@ -2403,7 +2436,7 @@ function toggleArchives(event) {
 
 
 <script>
-async function afficherArchiveMois(event, periode) {
+window.afficherArchiveMois = async function(event, periode) {
     if (event) event.preventDefault();
 
     const section = document.getElementById("archives-meteo");
@@ -2535,7 +2568,7 @@ async function afficherArchiveMois(event, periode) {
     }
 
     return false;
-}
+};
 </script>
 
 </body>
