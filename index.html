@@ -2443,6 +2443,17 @@ function toggleArchives(event) {
 window.afficherArchiveMois = async function(event, periode) {
     if (event) event.preventDefault();
 
+    // Quand on ouvre un mois d'archives, fermer tous les autres menus
+    [
+        "sous-menu-graphiques",
+        "sous-menu-pollen",
+        "sous-menu-air",
+        "previsions"
+    ].forEach(function(id) {
+        const element = document.getElementById(id);
+        if (element) element.style.display = "none";
+    });
+
     const section = document.getElementById("archives-meteo");
     const contenu = document.getElementById("archives-contenu");
     const sousMenu = document.getElementById("sous-menu-archives");
