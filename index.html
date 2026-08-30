@@ -2480,7 +2480,7 @@ window.afficherArchiveMois = async function(event, periode) {
         function dateFR(date) {
             if (!date) return "—";
             const [annee, mois, jour] = date.split("-");
-            return ${jour}/${mois}/${annee};
+            return jour + "/" + mois + "/" + annee;
         }
 
         contenu.innerHTML = `
