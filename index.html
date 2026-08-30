@@ -329,9 +329,9 @@ menu-deroulant{
 <div id="sous-menu-archives" class="sous-menu"
      style="display:none; width:90%; max-width:90%; margin-left:auto; margin-right:auto; box-sizing:border-box;">
   <div class="graph-submenu-inner">
-    <a href="#" onclick="return window.afficherArchiveMois(event, '2026-06')">📅 Juin 2026</a>
-    <a href="#" onclick="return window.afficherArchiveMois(event, '2026-07')">📅 Juillet 2026</a>
-    <a href="#" onclick="return window.afficherArchiveMois(event, '2026-08')">📅 Août 2026</a>
+    <a href="#" class="archive-mois" data-periode="2026-06">📅 Juin 2026</a>
+    <a href="#" class="archive-mois" data-periode="2026-07">📅 Juillet 2026</a>
+    <a href="#" class="archive-mois" data-periode="2026-08">📅 Août 2026</a>
   </div>
 </div>
 
@@ -2573,6 +2573,49 @@ window.afficherArchiveMois = async function(event, periode) {
 
     return false;
 };
+</script>
+
+
+<script id="archives-events">
+document.addEventListener("DOMContentLoaded", function () {
+
+    function fermerAutresSousMenus(exception) {
+        [
+            "sous-menu-archives",
+            "sous-menu-graphiques",
+            "sous-menu-pollen"
+        ].forEach(function(id) {
+            const el = document.getElementById(id);
+            if (el && id !== exception) {
+                el.style.display = "none";
+            }
+        });
+    }
+
+    document.querySelectorAll(".archive-mois").forEach(function(lien) {
+        lien.addEventListener("click", function(event) {
+            event.preventDefault();
+
+            const periode = lien.dataset.periode;
+
+            const menuArchives =
+                document.getElementById("sous-menu-archives");
+
+            if (menuArchives) {
+                menuArchives.style.display = "none";
+            }
+
+            fermerAutresSousMenus(null);
+
+            if (typeof window.afficherArchiveMois === "function") {
+                window.afficherArchiveMois(event, periode);
+            } else {
+                console.error("Fonction afficherArchiveMois introuvable");
+            }
+        });
+    });
+
+});
 </script>
 
 </body>
