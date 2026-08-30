@@ -2452,9 +2452,6 @@ window.afficherArchiveMois = async function(event, periode) {
     section.style.display = "block";
     contenu.innerHTML = "<p>Chargement des archives...</p>";
 
-    if (sousMenu) {
-        sousMenu.style.display = "none";
-    }
 
     try {
         const reponse = await fetch("bilans_mensuels.json?ts=" + Date.now());
@@ -2593,22 +2590,26 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.querySelectorAll(".archive-mois").forEach(function(lien) {
-        lien.addEventListener("click", function(event) {
+        lien.addEventListener("click", async function(event) {
             event.preventDefault();
 
             const periode = lien.dataset.periode;
 
-            const menuArchives =
-                document.getElementById("sous-menu-archives");
-
-            if (menuArchives) {
-                menuArchives.style.display = "none";
-            }
-
-            fermerAutresSousMenus(null);
-
             if (typeof window.afficherArchiveMois === "function") {
-                window.afficherArchiveMois(event, periode);
+                await window.afficherArchiveMois(event, periode);
+
+                fermerAutresSousMenus(null);
+
+                const section = document.getElementById("archives-meteo");
+                if (section) {
+                    section.style.display = "block";
+                    setTimeout(function() {
+                        section.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+                    }, 100);
+                }
             } else {
                 console.error("Fonction afficherArchiveMois introuvable");
             }
