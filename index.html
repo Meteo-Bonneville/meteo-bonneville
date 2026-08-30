@@ -2619,6 +2619,45 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+
+<script id="menus-exclusifs">
+document.addEventListener("click", function(event) {
+    const lien = event.target.closest("a[onclick]");
+    if (!lien) return;
+
+    const action = lien.getAttribute("onclick") || "";
+
+    const correspondances = [
+        ["toggleAir", "sous-menu-air"],
+        ["togglePollen", "sous-menu-pollen"],
+        ["togglePrevisions", "previsions"],
+        ["toggleSousMenuGraphiques", "sous-menu-graphiques"],
+        ["toggleArchives", "sous-menu-archives"]
+    ];
+
+    let cible = null;
+
+    for (const [nom, id] of correspondances) {
+        if (action.includes(nom)) {
+            cible = id;
+            break;
+        }
+    }
+
+    if (!cible) return;
+
+    correspondances.forEach(function([nom, id]) {
+        if (id === cible) return;
+
+        const element = document.getElementById(id);
+        if (element) {
+            element.style.display = "none";
+        }
+    });
+
+}, true);
+</script>
+
 </body>
 
 </html>
