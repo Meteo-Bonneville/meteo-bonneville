@@ -288,9 +288,19 @@ menu-deroulant{
   <a href="#" onclick="togglePollen(); return false;">🌿 Allergies / Pollens</a>
   <a href="#" onclick="togglePrevisions(); return false;">🌤️ Prévisions</a>
   <a href="#" onclick="toggleSousMenuGraphiques(event)">📊 Graphiques</a>
+    <a href="#" onclick="toggleArchives(event)">🗂️ Archives météo</a>
 <a href="#contact">✉️ Contact</a>
 <a href="#photos">📸 Galerie Photos</a>
 </nav>
+
+<div id="sous-menu-archives" class="sous-menu"
+     style="display:none; width:90%; max-width:90%; margin-left:auto; margin-right:auto; box-sizing:border-box;">
+  <div class="graph-submenu-inner">
+    <a href="#" onclick="afficherArchiveMois(event, '2026-06')">📅 Juin 2026</a>
+    <a href="#" onclick="afficherArchiveMois(event, '2026-07')">📅 Juillet 2026</a>
+    <a href="#" onclick="afficherArchiveMois(event, '2026-08')">📅 Août 2026</a>
+  </div>
+</div>
 
 <div id="sous-menu-graphiques" class="sous-menu"
      style="display:none; width:90%; max-width:90%; margin-left:auto; margin-right:auto; box-sizing:border-box;">
@@ -443,6 +453,13 @@ Chargement des prévisions météo...
     </div>
   </div>
 </div>
+
+<section id="archives-meteo" class="carte" style="margin-top:25px; display:none;">
+  <h2>🗂️ Archives météo</h2>
+  <div id="archives-contenu">
+    <p>Choisissez un mois dans le menu Archives météo.</p>
+  </div>
+</section>
 
 <section id="graphiques" class="carte" style="margin-top:25px; display:none;">
   <h2>📊 Graphiques</h2>
@@ -2365,6 +2382,160 @@ if ("serviceWorker" in navigator) {
     overlay.style.display = "none";
   });
 })();
+</script>
+
+
+<script>
+function toggleArchives(event) {
+    if (event) event.preventDefault();
+
+    const menu = document.getElementById("sous-menu-archives");
+    if (!menu) return false;
+
+    menu.style.display =
+        (menu.style.display === "none" || menu.style.display === "")
+        ? "block"
+        : "none";
+
+    return false;
+}
+</script>
+
+
+<script>
+async function afficherArchiveMois(event, periode) {
+    if (event) event.preventDefault();
+
+    const section = document.getElementById("archives-meteo");
+    const contenu = document.getElementById("archives-contenu");
+    const sousMenu = document.getElementById("sous-menu-archives");
+
+    if (!section || !contenu) return false;
+
+    section.style.display = "block";
+    contenu.innerHTML = "<p>Chargement des archives...</p>";
+
+    if (sousMenu) {
+        sousMenu.style.display = "none";
+    }
+
+    try {
+        const reponse = await fetch("bilans_mensuels.json?ts=" + Date.now());
+
+        if (!reponse.ok) {
+            throw new Error("Impossible de charger les archives");
+        }
+
+        const bilans = await reponse.json();
+        const bilan = bilans.find(item => item.periode === periode);
+
+        if (!bilan) {
+            contenu.innerHTML = "<p>Aucune donnée disponible pour ce mois.</p>";
+            return false;
+        }
+
+        const nomsMois = [
+            "",
+            "Janvier", "Février", "Mars", "Avril",
+            "Mai", "Juin", "Juillet", "Août",
+            "Septembre", "Octobre", "Novembre", "Décembre"
+        ];
+
+        const titre = nomsMois[bilan.mois] + " " + bilan.annee;
+
+        function dateFR(date) {
+            if (!date) return "—";
+            const [annee, mois, jour] = date.split("-");
+            return ${jour}/${mois}/${annee};
+        }
+
+        contenu.innerHTML = `
+            <h3 style="text-align:center;">📅 ${titre}</h3>
+
+            <p style="text-align:center;">
+                Données disponibles du
+                <strong>${dateFR(bilan.date_debut)}</strong>
+                au
+                <strong>${dateFR(bilan.date_fin)}</strong>
+                — ${bilan.nombre_jours} jours
+            </p>
+
+            <div style="
+                display:grid;
+                grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+                gap:14px;
+                margin-top:20px;
+            ">
+
+                <div class="carte">
+                    <h3>🌡️ Température</h3>
+                    <p>Minimum : <strong>${bilan.temperature_min} °C</strong><br>
+                    le ${dateFR(bilan.date_temperature_min)}</p>
+
+                    <p>Maximum : <strong>${bilan.temperature_max} °C</strong><br>
+                    le ${dateFR(bilan.date_temperature_max)}</p>
+
+                    <p>Moyenne : <strong>${bilan.temperature_moyenne} °C</strong></p>
+                </div>
+
+                <div class="carte">
+                    <h3>💧 Humidité</h3>
+                    <p>Minimum : <strong>${bilan.humidite_min} %</strong><br>
+                    le ${dateFR(bilan.date_humidite_min)}</p>
+
+                    <p>Maximum : <strong>${bilan.humidite_max} %</strong><br>
+                    le ${dateFR(bilan.date_humidite_max)}</p>
+
+                    <p>Moyenne : <strong>${bilan.humidite_moyenne} %</strong></p>
+                </div>
+
+                <div class="carte">
+                    <h3>💨 Vent</h3>
+                    <p>Vent moyen : <strong>${bilan.vent_moyen} km/h</strong></p>
+
+                    <p>Vent maximum : <strong>${bilan.vent_max} km/h</strong><br>
+                    le ${dateFR(bilan.date_vent_max)}</p>
+
+                    <p>Rafale maximale : <strong>${bilan.rafale_max} km/h</strong><br>
+                    le ${dateFR(bilan.date_rafale_max)}</p>
+                </div>
+
+                <div class="carte">
+                    <h3>🔵 Pression</h3>
+                    <p>Minimum : <strong>${bilan.pression_min} hPa</strong><br>
+                    le ${dateFR(bilan.date_pression_min)}</p>
+
+                    <p>Maximum : <strong>${bilan.pression_max} hPa</strong><br>
+                    le ${dateFR(bilan.date_pression_max)}</p>
+
+                    <p>Moyenne : <strong>${bilan.pression_moyenne} hPa</strong></p>
+                </div>
+
+                <div class="carte">
+                    <h3>🌧️ Pluie</h3>
+                    <p>Cumul du mois : <strong>${bilan.pluie_totale} mm</strong></p>
+
+                    <p>Journée la plus arrosée :
+                    <strong>${bilan.pluie_jour_max} mm</strong><br>
+                    le ${dateFR(bilan.date_pluie_jour_max)}</p>
+                </div>
+
+            </div>
+        `;
+
+        section.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    } catch (erreur) {
+        console.error(erreur);
+        contenu.innerHTML =
+            "<p>⚠️ Impossible de charger les archives météo.</p>";
+    }
+
+    return false;
+}
 </script>
 
 </body>
