@@ -2672,6 +2672,31 @@ document.addEventListener("click", function(event) {
 }, true);
 </script>
 
+
+<script id="fermeture-archives-par-graphiques">
+document.addEventListener("click", function(event) {
+    const lien = event.target.closest("a");
+    if (!lien) return;
+
+    const action = lien.getAttribute("onclick") || "";
+
+    const estGraphique =
+        action.includes("toggleSousMenuGraphiques") ||
+        action.includes("toggleGraphiques(") ||
+        action.includes("toggleGraphiques7Jours") ||
+        action.includes("toggleGraphiquesMois");
+
+    if (!estGraphique) return;
+
+    const archives = document.getElementById("archives-meteo");
+    const sousMenuArchives = document.getElementById("sous-menu-archives");
+
+    if (archives) archives.style.display = "none";
+    if (sousMenuArchives) sousMenuArchives.style.display = "none";
+
+}, true);
+</script>
+
 </body>
 
 </html>
