@@ -329,9 +329,7 @@ menu-deroulant{
 <div id="sous-menu-archives" class="sous-menu"
      style="display:none; width:90%; max-width:90%; margin-left:auto; margin-right:auto; box-sizing:border-box;">
   <div class="graph-submenu-inner">
-    <a href="#" class="archive-mois" data-periode="2026-06">📅 Juin 2026</a>
-    <a href="#" class="archive-mois" data-periode="2026-07">📅 Juillet 2026</a>
-    <a href="#" class="archive-mois" data-periode="2026-08">📅 Août 2026</a>
+        <div id="liste-mois-archives"></div>
   </div>
 </div>
 
@@ -2695,6 +2693,62 @@ document.addEventListener("click", function(event) {
     if (sousMenuArchives) sousMenuArchives.style.display = "none";
 
 }, true);
+</script>
+
+
+<script id="menu-archives-automatique">
+async function chargerMenuArchives() {
+    const conteneur = document.getElementById("liste-mois-archives");
+    if (!conteneur) return;
+
+    try {
+        const reponse = await fetch("bilans_mensuels.json?ts=" + Date.now());
+        const bilans = await reponse.json();
+
+        conteneur.innerHTML = "";
+
+        const moisNoms = [
+            "Janvier", "Février", "Mars", "Avril",
+            "Mai", "Juin", "Juillet", "Août",
+            "Septembre", "Octobre", "Novembre", "Décembre"
+        ];
+
+        bilans
+            .slice()
+            .sort(function(a, b) {
+                return a.periode.localeCompare(b.periode);
+            })
+            .forEach(function(bilan) {
+                const parties = bilan.periode.split("-");
+                const annee = parties[0];
+                const mois = parseInt(parties[1], 10);
+
+                const lien = document.createElement("a");
+                lien.href = "#";
+                lien.className = "archive-mois";
+                lien.dataset.periode = bilan.periode;
+                lien.textContent = "📅 " + moisNoms[mois - 1] + " " + annee;
+
+                lien.addEventListener("click", async function(event) {
+                    event.preventDefault();
+
+                    if (typeof window.afficherArchiveMois === "function") {
+                        await window.afficherArchiveMois(event, bilan.periode);
+
+                        const sousMenu = document.getElementById("sous-menu-archives");
+                        if (sousMenu) sousMenu.style.display = "none";
+                    }
+                });
+
+                conteneur.appendChild(lien);
+            });
+
+    } catch (erreur) {
+        console.error("Erreur chargement menu archives :", erreur);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", chargerMenuArchives);
 </script>
 
 </body>
