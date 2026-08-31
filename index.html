@@ -385,6 +385,7 @@ menu-deroulant{
 <div id="sous-menu-cartes" class="sous-menu" style="display:none;">
   <button onclick="afficherCarte('radar')">🌧️ Radar pluie</button>
   <button onclick="afficherCarte('foudre')">⚡ Foudre</button>
+<button onclick="afficherCarte('masses-air')">🌍 Masses d’air 850 hPa</button>
   <button onclick="afficherCarte('satellite')">🛰️ Satellite</button>
   <button onclick="afficherCarte('temperature')">🌡️ Températures</button>
 </div>
@@ -771,6 +772,41 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
 alt="Animation foudre France"
 style="width:100%;max-width:768px;height:auto;border-radius:10px;">
 
+</div>
+
+
+<div id="carte-masses-air-bloc" class="valeur" style="display:none;">
+  <h3>🌍 Masses d’air à 850 hPa – Modèle GFS</h3>
+
+  <div style="text-align:center;">
+    <img
+      id="gfs-masses-air"
+      src="cartes_gfs/gfs24.png"
+      alt="Prévision GFS des masses d’air à 850 hPa"
+      style="width:100%;max-width:768px;height:auto;border-radius:8px;"
+    >
+
+    <div id="gfs-echeance"
+         style="margin:10px 0;font-weight:bold;">
+      Échéance : +24 h
+    </div>
+
+    <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0;">
+      <button type="button" onclick="gfsPrecedent()">◀️ Précédent</button>
+      <button type="button" id="gfs-play" onclick="gfsLecturePause()">⏸️ Pause</button>
+      <button type="button" onclick="gfsSuivant()">Suivant ▶️</button>
+    </div>
+
+    <div style="font-size:0.9em;margin-top:8px;">
+      Source :
+      <a href="https://www.meteociel.fr/"
+         target="_blank"
+         rel="noopener noreferrer">
+        Météociel
+      </a>
+      – Modèle GFS
+    </div>
+  </div>
 </div>
 
 <div id="carte-satellite-bloc" class="valeur">
@@ -1215,6 +1251,9 @@ function togglePrevisions() {
 }
 
 function afficherCarte(type) {
+  const menuCartes = document.getElementById("sous-menu-cartes");
+  if (menuCartes) menuCartes.style.display = "none";
+
   const zone = document.getElementById("affichage-cartes");
   const bloc = document.getElementById("carte-" + type + "-bloc");
   const dejaOuvert = bloc.style.display === "block";
@@ -1224,6 +1263,7 @@ function afficherCarte(type) {
   document.getElementById("carte-foudre-bloc").style.display = "none";
   document.getElementById("carte-satellite-bloc").style.display = "none";
   document.getElementById("carte-temperature-bloc").style.display = "none";
+  document.getElementById("carte-masses-air-bloc").style.display = "none";
 
   if (dejaOuvert) {
     zone.style.display = "none";
@@ -2851,6 +2891,65 @@ async function chargerMenuArchives() {
 }
 
 document.addEventListener("DOMContentLoaded", chargerMenuArchives);
+</script>
+
+
+<script>
+const gfsEcheances = [24, 36, 48, 72, 96, 120, 144, 168, 192];
+let gfsIndex = 0;
+let gfsTimer = null;
+let gfsEnLecture = true;
+
+function gfsAfficher() {
+  const h = gfsEcheances[gfsIndex];
+  const img = document.getElementById("gfs-masses-air");
+  const texte = document.getElementById("gfs-echeance");
+
+  if (img) img.src = "cartes_gfs/gfs" + h + ".png";
+  if (texte) texte.textContent = "Échéance : +" + h + " h";
+}
+
+function gfsSuivant() {
+  gfsIndex = (gfsIndex + 1) % gfsEcheances.length;
+  gfsAfficher();
+}
+
+function gfsPrecedent() {
+  gfsIndex = (gfsIndex - 1 + gfsEcheances.length) % gfsEcheances.length;
+  gfsAfficher();
+}
+
+function gfsDemarrer() {
+  if (gfsTimer) clearInterval(gfsTimer);
+  gfsTimer = setInterval(gfsSuivant, 1500);
+  gfsEnLecture = true;
+
+  const bouton = document.getElementById("gfs-play");
+  if (bouton) bouton.textContent = "⏸️ Pause";
+}
+
+function gfsArreter() {
+  if (gfsTimer) {
+    clearInterval(gfsTimer);
+    gfsTimer = null;
+  }
+
+  gfsEnLecture = false;
+
+  const bouton = document.getElementById("gfs-play");
+  if (bouton) bouton.textContent = "▶️ Lecture";
+}
+
+function gfsLecturePause() {
+  if (gfsEnLecture) {
+    gfsArreter();
+  } else {
+    gfsDemarrer();
+  }
+}
+
+gfsAfficher();
+gfsDemarrer();
 </script>
 
 </body>
