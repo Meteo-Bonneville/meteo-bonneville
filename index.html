@@ -387,7 +387,9 @@ menu-deroulant{
   <button onclick="afficherCarte('foudre')">⚡ Foudre</button>
 <button onclick="afficherCarte('masses-air')">🌍 Masses d’air 850 hPa</button>
   <button onclick="afficherCarte('satellite')">🛰️ Satellite</button>
-  <button onclick="afficherCarte('temperature')">🌡️ Températures</button>
+  <button onclick="afficherCarte('pression')">🔵 Pression</button>
+<button onclick="afficherCarte('ensoleillement')">☀️ Ensoleillement</button>
+<button onclick="afficherCarte('temperature')">🌡️ Températures</button>
 </div>
 </div>
   <a href="#" onclick="toggleAir(); return false;">🏭 Qualité de l'air</a>
@@ -826,6 +828,44 @@ style="width:100%;max-width:768px;height:auto;border-radius:10px;">
 <img id="satellite"
 src="https://modeles20.meteociel.fr/satellite/msg0_animsatircolmsgeu.gif"
 alt="Animation satellite Europe" style="width:100%;max-width:768px;height:auto;border-radius:10px;">
+</div>
+
+<div id="carte-pression-bloc" class="valeur" style="display:none;">
+<h3>🔵 Pression atmosphérique</h3>
+
+<p><strong>Sud-Est</strong></p>
+<img id="pression-se"
+src="https://www.meteociel.fr/cartes_obs/pression2_r11.png"
+alt="Pression atmosphérique Sud-Est"
+style="width:100%;max-width:768px;height:auto;border-radius:10px;">
+
+<p><strong>France entière</strong></p>
+<img id="pression-fr"
+src="https://www.meteociel.fr/cartes_obs/pression2.png"
+alt="Pression atmosphérique France entière"
+style="width:100%;max-width:768px;height:auto;border-radius:10px;">
+
+<p style="font-size:0.9em;margin-top:8px;">
+Source :
+<a href="https://www.meteociel.fr/observations-meteo/pression.php"
+target="_blank" rel="noopener noreferrer">Météociel</a>
+</p>
+</div>
+
+<div id="carte-ensoleillement-bloc" class="valeur" style="display:none;">
+<h3>☀️ Ensoleillement</h3>
+
+<p><strong>France entière</strong></p>
+<img id="ensoleillement-fr"
+src="https://www.meteociel.fr/cartes_obs/enso.png"
+alt="Ensoleillement France entière"
+style="width:100%;max-width:768px;height:auto;border-radius:10px;">
+
+<p style="font-size:0.9em;margin-top:8px;">
+Source :
+<a href="https://www.meteociel.fr/observations-meteo/enso.php?region=r11"
+target="_blank" rel="noopener noreferrer">Météociel</a>
+</p>
 </div>
 
 <div id="carte-temperature-bloc" class="valeur">
@@ -1374,7 +1414,9 @@ function afficherCarte(type) {
   document.getElementById("carte-foudre-bloc").style.display = "none";
   document.getElementById("carte-satellite-bloc").style.display = "none";
   document.getElementById("carte-temperature-bloc").style.display = "none";
-  document.getElementById("carte-masses-air-bloc").style.display = "none";
+  document.getElementById("carte-pression-bloc").style.display = "none";
+document.getElementById("carte-ensoleillement-bloc").style.display = "none";
+document.getElementById("carte-masses-air-bloc").style.display = "none";
 
   if (dejaOuvert) {
     zone.style.display = "none";
