@@ -451,6 +451,12 @@ Chargement des prévisions météo...
 </div>
 
 <div class="valeur">
+<h3>🌡️ Température ressentie</h3>
+<div class="nombre" id="temperature-ressentie">-- °C</div>
+<div class="heure" id="type-ressenti">Calcul en cours...</div>
+</div>
+
+<div class="valeur">
 <h3>💧 Humidité</h3>
 <div class="nombre" id="humidite">-- %</div>
 </div>
@@ -1001,6 +1007,68 @@ async function majMeteo() {
     document.getElementById("temp_min_jour").textContent = d.temp_min_jour + " °C";
     document.getElementById("humidite").textContent = d.humidite + " %";
     document.getElementById("vent").textContent = d.vent + " km/h";
+
+    // Température ressentie :
+    // refroidissement éolien par temps froid,
+    // indice de chaleur par temps chaud et humide.
+    const T = Number(d.temperature);
+    const H = Number(d.humidite);
+    const V = Number(d.vent);
+
+    let ressenti = T;
+    let typeRessenti = "✅ Aucun effet thermique particulier";
+
+    if (Number.isFinite(T) && Number.isFinite(V) && T <= 10 && V > 4.8) {
+        // Formule officielle de refroidissement éolien (T en °C, V en km/h)
+        ressenti = 13.12
+            + 0.6215 * T
+            - 11.37 * Math.pow(V, 0.16)
+            + 0.3965 * T * Math.pow(V, 0.16);
+
+        typeRessenti = "❄️ Refroidissement éolien";
+
+    } else if (
+        Number.isFinite(T) &&
+        Number.isFinite(H) &&
+        T >= 26.7 &&
+        H >= 40
+    ) {
+        // Indice de chaleur NOAA : calcul en °F puis conversion en °C
+        const Tf = T * 9 / 5 + 32;
+
+        let HI =
+            -42.379
+            + 2.04901523 * Tf
+            + 10.14333127 * H
+            - 0.22475541 * Tf * H
+            - 0.00683783 * Tf * Tf
+            - 0.05481717 * H * H
+            + 0.00122874 * Tf * Tf * H
+            + 0.00085282 * Tf * H * H
+            - 0.00000199 * Tf * Tf * H * H;
+
+        // Ajustements NOAA pour humidité très basse ou très élevée
+        if (H < 13 && Tf >= 80 && Tf <= 112) {
+            HI -= ((13 - H) / 4) *
+                Math.sqrt((17 - Math.abs(Tf - 95)) / 17);
+        } else if (H > 85 && Tf >= 80 && Tf <= 87) {
+            HI += ((H - 85) / 10) * ((87 - Tf) / 5);
+        }
+
+        ressenti = (HI - 32) * 5 / 9;
+        typeRessenti = "🔥 Indice de chaleur";
+    }
+
+    const ressentiEl = document.getElementById("temperature-ressentie");
+    const typeEl = document.getElementById("type-ressenti");
+
+    if (ressentiEl && Number.isFinite(ressenti)) {
+        ressentiEl.textContent = ressenti.toFixed(1) + " °C";
+    }
+
+    if (typeEl) {
+        typeEl.textContent = typeRessenti;
+    }
     document.getElementById("rafale").textContent = d.rafale + " km/h";
     document.getElementById("rafale_max_jour").textContent = d.rafale_max_jour + " km/h";
     document.getElementById("pluie_heure").textContent = d.pluie_h + " mm";
