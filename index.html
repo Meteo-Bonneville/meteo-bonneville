@@ -2895,18 +2895,32 @@ document.addEventListener("DOMContentLoaded", chargerMenuArchives);
 
 
 <script>
-const gfsEcheances = [24, 36, 48, 72, 96, 120, 144, 168, 192];
+const gfsEcheances = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 let gfsIndex = 0;
 let gfsTimer = null;
 let gfsEnLecture = true;
 
 function gfsAfficher() {
-  const h = gfsEcheances[gfsIndex];
+  const jour = gfsEcheances[gfsIndex];
   const img = document.getElementById("gfs-masses-air");
   const texte = document.getElementById("gfs-echeance");
 
-  if (img) img.src = "cartes_gfs/gfs" + h + ".png";
-  if (texte) texte.textContent = "Échéance : +" + h + " h";
+  if (img) img.src = "cartes_gfs/gfs20h-" + jour + ".png?t=" + Date.now();
+
+  if (texte) {
+    const d = new Date();
+    d.setDate(d.getDate() + jour);
+
+    const dateTexte = new Intl.DateTimeFormat("fr-FR", {
+      timeZone: "Europe/Paris",
+      weekday: "long",
+      day: "numeric",
+      month: "long"
+    }).format(d);
+
+    texte.textContent =
+      (jour === 0 ? "Aujourd’hui" : dateTexte) + " – 20 h";
+  }
 }
 
 function gfsSuivant() {
