@@ -4,9 +4,9 @@
   "nombre_releves": 1,
   "temperature_min": 13.6,
   "date_temperature_min": "2026-09-01",
-  "temperature_max": 25.2,
+  "temperature_max": 25.4,
   "date_temperature_max": "2026-09-01",
-  "rafale_max": 22.0,
+  "rafale_max": 25.3,
   "date_rafale_max": "2026-09-01",
   "pluie_cumulee": 0
 }
