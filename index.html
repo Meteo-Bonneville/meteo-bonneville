@@ -462,6 +462,12 @@ Chargement des prévisions météo...
 </div>
 
 <div class="valeur">
+<h3>🌡️ Humidex</h3>
+<div class="nombre" id="humidex">--</div>
+<div class="heure" id="humidex-niveau">Calcul en cours...</div>
+</div>
+
+<div class="valeur">
     <h3>🌬️ Vent</h3>
     <div class="nombre" id="vent">-- km/h</div>
 </div>
@@ -1006,6 +1012,43 @@ async function majMeteo() {
     document.getElementById("heure_rafale_max").textContent = "à " + d.heure_rafale_max;
     document.getElementById("temp_min_jour").textContent = d.temp_min_jour + " °C";
     document.getElementById("humidite").textContent = d.humidite + " %";
+
+// Humidex
+const tempHx = Number(d.temperature);
+const humHx = Number(d.humidite);
+const humidexEl = document.getElementById("humidex");
+const humidexNiveauEl = document.getElementById("humidex-niveau");
+
+if (
+    humidexEl &&
+    humidexNiveauEl &&
+    Number.isFinite(tempHx) &&
+    Number.isFinite(humHx)
+) {
+    // Pression de vapeur calculée avec température + humidité
+    const e = (humHx / 100) * 6.112 *
+        Math.exp((17.62 * tempHx) / (243.12 + tempHx));
+
+    const humidex = tempHx + (5 / 9) * (e - 10);
+    const hx = Math.round(humidex);
+
+    humidexEl.textContent = hx;
+
+    if (hx < 20) {
+        humidexNiveauEl.textContent = "❄️ Frais / aucun inconfort";
+    } else if (hx < 30) {
+        humidexNiveauEl.textContent = "✅ Confortable";
+    } else if (hx < 40) {
+        humidexNiveauEl.textContent = "⚠️ Inconfort léger";
+    } else if (hx < 46) {
+        humidexNiveauEl.textContent = "🔥 Fort inconfort";
+    } else {
+        humidexNiveauEl.textContent = "🔥🔥 Dangereux";
+    }
+} else {
+    if (humidexEl) humidexEl.textContent = "--";
+    if (humidexNiveauEl) humidexNiveauEl.textContent = "Donnée indisponible";
+}
     document.getElementById("vent").textContent = d.vent + " km/h";
 
     // Température ressentie :
