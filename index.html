@@ -1648,6 +1648,48 @@ document.addEventListener("DOMContentLoaded", function () {
   const contactLinks = document.querySelectorAll('a[href="#contact"]');
   const photosLinks = document.querySelectorAll('a[href="#photos"]');
 
+// Petit badge des nouvelles photos
+window.majBadgeGalerie = function(nombre) {
+  photosLinks.forEach(link => {
+    link.style.position = "relative";
+
+    let badge = link.querySelector(".badge-galerie-photos");
+
+    if (!badge) {
+      badge = document.createElement("span");
+      badge.className = "badge-galerie-photos";
+
+      Object.assign(badge.style, {
+        position: "absolute",
+        top: "-8px",
+        right: "-8px",
+        minWidth: "22px",
+        height: "22px",
+        padding: "0 6px",
+        borderRadius: "999px",
+        background: "#e53935",
+        color: "#fff",
+        fontSize: "13px",
+        fontWeight: "bold",
+        lineHeight: "22px",
+        textAlign: "center",
+        boxSizing: "border-box",
+        boxShadow: "0 2px 6px rgba(0,0,0,0.35)",
+        zIndex: "20"
+      });
+
+      link.appendChild(badge);
+    }
+
+    if (nombre > 0) {
+      badge.textContent = nombre > 99 ? "99+" : String(nombre);
+      badge.style.display = "block";
+    } else {
+      badge.style.display = "none";
+    }
+  });
+};
+
   function togglePanel(panel, other) {
     const ouvrir = panel.style.display === "none" || panel.style.display === "";
     if (other) other.style.display = "none";
@@ -1671,6 +1713,17 @@ document.addEventListener("DOMContentLoaded", function () {
     link.addEventListener("click", function (e) {
       e.preventDefault();
       togglePanel(photos, contact);
+
+      if (window.galerieDernierePhoto) {
+        localStorage.setItem(
+          "stationMeteoGalerieDerniereVue",
+          window.galerieDernierePhoto
+        );
+
+        if (window.majBadgeGalerie) {
+          window.majBadgeGalerie(0);
+        }
+      }
     });
   });
 });
@@ -1713,6 +1766,37 @@ async function chargerGaleriePhotos() {
 
     const data = await r.json();
     const photos = (data.resources || []).slice().sort((a,b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+
+    // Compteur de nouvelles photos pour ce visiteur
+    const dernierePhoto =
+      photos.length && photos[0].created_at
+        ? photos[0].created_at
+        : "";
+
+    window.galerieDernierePhoto = dernierePhoto;
+
+    const derniereVue =
+      localStorage.getItem("stationMeteoGalerieDerniereVue") || "";
+
+    let nouvellesPhotos = 0;
+
+    if (photos.length) {
+      if (!derniereVue) {
+        nouvellesPhotos = photos.length;
+      } else {
+        const dateVue = new Date(derniereVue).getTime();
+
+        nouvellesPhotos = photos.filter(photo => {
+          if (!photo.created_at) return false;
+          return new Date(photo.created_at).getTime() > dateVue;
+        }).length;
+      }
+    }
+
+    if (window.majBadgeGalerie) {
+      window.majBadgeGalerie(nouvellesPhotos);
+    }
+
 
     galerie.innerHTML = "";
 
@@ -1798,6 +1882,11 @@ async function chargerGaleriePhotos() {
 }
 
 document.addEventListener("DOMContentLoaded", chargerGaleriePhotos);
+
+window.addEventListener("load", function () {
+  chargerGaleriePhotos();
+});
+
 </script>
 
 
