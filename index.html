@@ -445,6 +445,15 @@ Chargement des prévisions météo...
 <div class="carte">
 <h2>📡 Données météo en direct</h2>
 
+<div id="alertes-meteo-auto" style="
+display:none;
+margin:12px 0 18px 0;
+padding:14px 16px;
+border-radius:12px;
+font-weight:700;
+line-height:1.5;
+"></div>
+
 <div class="grille">
 
 <div class="valeur">
@@ -1152,9 +1161,62 @@ if (
     if (typeEl) {
         typeEl.textContent = typeRessenti;
     }
-    document.getElementById("rafale").textContent = d.rafale + " km/h";
+    
+function majAlertesMeteo(d) {
+    const bandeau = document.getElementById("alertes-meteo-auto");
+    if (!bandeau) return;
+
+    const t = Number(d.temperature);
+    const rafale = Number(d.rafale);
+    const pluie = Number(d.pluie_h);
+
+    const alertes = [];
+    let niveauFort = false;
+
+    if (Number.isFinite(t)) {
+        if (t <= 3) {
+            alertes.push("🥶 Risque de gel");
+        } else if (t >= 40) {
+            alertes.push("🌡️ Chaleur extrême");
+            niveauFort = true;
+        } else if (t >= 35) {
+            alertes.push("🌡️ Forte chaleur");
+        }
+    }
+
+    if (Number.isFinite(rafale)) {
+        if (rafale >= 80) {
+            alertes.push("🌬️ Rafales de vent très fortes");
+            niveauFort = true;
+        } else if (rafale >= 60) {
+            alertes.push("💨 Fortes rafales de vent");
+        }
+    }
+
+    if (Number.isFinite(pluie) && pluie >= 10) {
+        alertes.push("🌧️ Fortes précipitations");
+    }
+
+    if (!alertes.length) {
+        bandeau.style.display = "none";
+        bandeau.innerHTML = "";
+        return;
+    }
+
+    bandeau.style.display = "block";
+    bandeau.style.background = niveauFort ? "#7f1d1d" : "#92400e";
+    bandeau.style.color = "#ffffff";
+
+    bandeau.innerHTML =
+        alertes.map(a => "⚠️ " + a).join("<br>") +
+        '<div style="font-size:0.82em;font-weight:400;margin-top:6px;">Alertes automatiques basées sur les relevés de la Station Météo de Bonneville — hors vigilance officielle Météo-France.</div>';
+}
+
+document.getElementById("rafale").textContent = d.rafale + " km/h";
     document.getElementById("rafale_max_jour").textContent = d.rafale_max_jour + " km/h";
     document.getElementById("pluie_heure").textContent = d.pluie_h + " mm";
+    majAlertesMeteo(d);
+
     document.getElementById("pluie").textContent = d.pluie_totale + " mm";
     document.getElementById("pluie_jour").textContent = d.pluie_totale + " mm";
     document.getElementById("rayonnement").textContent = d.rayonnement + " W/m²";
