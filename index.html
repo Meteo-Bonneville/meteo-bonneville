@@ -1084,15 +1084,17 @@ if (
     humidexEl.textContent = hx;
 
     if (hx < 20) {
-        humidexNiveauEl.textContent = "❄️ Frais / aucun inconfort";
+      humidexNiveauEl.textContent = "🙂 Confortable";
     } else if (hx < 30) {
-        humidexNiveauEl.textContent = "✅ Confortable";
+      humidexNiveauEl.textContent = "🟢 Léger inconfort";
+    } else if (hx < 35) {
+      humidexNiveauEl.textContent = "🟡 Inconfort";
     } else if (hx < 40) {
-        humidexNiveauEl.textContent = "⚠️ Inconfort léger";
+      humidexNiveauEl.textContent = "⚠️ Inconfort marqué";
     } else if (hx < 46) {
-        humidexNiveauEl.textContent = "🔥 Fort inconfort";
+      humidexNiveauEl.textContent = "🟠 Fort inconfort — éviter les efforts";
     } else {
-        humidexNiveauEl.textContent = "🔥🔥 Dangereux";
+      humidexNiveauEl.textContent = "🔴 Danger — coup de chaleur possible";
     }
 } else {
     if (humidexEl) humidexEl.textContent = "--";
