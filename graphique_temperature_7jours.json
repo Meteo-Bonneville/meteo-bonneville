@@ -720,8 +720,38 @@
     "point_rosee": 12.0
   },
   {
-    "heure": "2026-09-17 00:05:10",
-    "temperature": 16.0,
-    "point_rosee": 11.8
+    "heure": "2026-09-17 00:59:59",
+    "temperature": 15.7,
+    "point_rosee": 12.1
+  },
+  {
+    "heure": "2026-09-17 01:59:47",
+    "temperature": 15.1,
+    "point_rosee": 12.4
+  },
+  {
+    "heure": "2026-09-17 02:59:49",
+    "temperature": 14.2,
+    "point_rosee": 11.5
+  },
+  {
+    "heure": "2026-09-17 03:59:52",
+    "temperature": 12.7,
+    "point_rosee": 10.2
+  },
+  {
+    "heure": "2026-09-17 04:59:52",
+    "temperature": 11.6,
+    "point_rosee": 10.0
+  },
+  {
+    "heure": "2026-09-17 05:59:55",
+    "temperature": 10.9,
+    "point_rosee": 9.8
+  },
+  {
+    "heure": "2026-09-17 06:05:07",
+    "temperature": 10.7,
+    "point_rosee": 9.7
   }
 ]
