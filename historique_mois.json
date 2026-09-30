@@ -1,12 +1,12 @@
 {
-  "periode_debut": "20260901",
-  "periode_fin": "20260930",
-  "nombre_releves": 696,
-  "temperature_min": 6.6,
-  "date_temperature_min": "2026-09-23",
-  "temperature_max": 35.1,
-  "date_temperature_max": "2026-09-07",
-  "rafale_max": 59.9,
-  "date_rafale_max": "2026-09-08",
-  "pluie_cumulee": 14.23
+  "periode_debut": "20261001",
+  "periode_fin": "20261001",
+  "nombre_releves": 1,
+  "temperature_min": 16.5,
+  "date_temperature_min": "2026-10-01",
+  "temperature_max": 16.7,
+  "date_temperature_max": "2026-10-01",
+  "rafale_max": 0.0,
+  "date_rafale_max": "2026-10-01",
+  "pluie_cumulee": 0
 }
