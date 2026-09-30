@@ -4,9 +4,9 @@
   "nombre_releves": 1,
   "temperature_min": 16.5,
   "date_temperature_min": "2026-10-01",
-  "temperature_max": 16.7,
+  "temperature_max": 17.0,
   "date_temperature_max": "2026-10-01",
-  "rafale_max": 0.0,
+  "rafale_max": 2.1,
   "date_rafale_max": "2026-10-01",
   "pluie_cumulee": 0
 }
