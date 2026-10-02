@@ -399,7 +399,7 @@ menu-deroulant{
     <a href="#" onclick="toggleArchives(event)">🗂️ Archives météo</a>
 <a href="#contact">✉️ Contact</a>
 <a href="#photos">📸 Galerie Photos</a>
-    <a href="#webcams">📷 Webcams Haute-Savoie</a>
+      <a href="#webcams" onclick="event.preventDefault();var w=document.getElementById('webcams');w.style.display=(w.style.display==='none'?'block':'none');if(w.style.display==='block')w.scrollIntoView({behavior:'smooth'});">📷 Webcams Haute-Savoie</a>
     
 </nav>
 
