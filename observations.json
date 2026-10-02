@@ -1,10 +1,10 @@
 {
-    "date": "2026-10-02 23:20:38",
+    "date": "2026-10-02 23:22:14",
     "temperature": 13.7,
     "temp_max_jour": 22.0,
     "heure_temp_max": "17:49",
-    "heure_temp_min": "06:14",
-    "temp_min_jour": 13.9,
+    "heure_temp_min": "23:19",
+    "temp_min_jour": 13.7,
     "humidite": 73.4,
     "pression": 1030.1,
     "vent": 0.0,
