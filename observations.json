@@ -1,5 +1,5 @@
 {
-    "date": "2026-10-05 01:10:30",
+    "date": "2026-10-05 01:12:18",
     "temperature": 13.1,
     "temp_max_jour": 14.4,
     "heure_temp_max": "00:34",
@@ -11,7 +11,7 @@
     "rafale": 0.0,
     "rafale_max_jour": 6.8,
     "heure_rafale_max": "00:29",
-    "direction": 264,
+    "direction": 156,
     "point_rosee": 7.8,
     "pluie_h": 0.0,
     "pluie_totale": 0.0,
