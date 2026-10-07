@@ -1,5 +1,5 @@
 {
-    "date": "2026-10-07 18:48:11",
+    "date": "2026-10-07 18:50:36",
     "temperature": 15.6,
     "temp_max_jour": 16.4,
     "heure_temp_max": "15:19",
@@ -16,5 +16,5 @@
     "pluie_h": 0.0,
     "pluie_totale": 1.52,
     "uv": 0.0,
-    "rayonnement": 3.6
+    "rayonnement": 3.0
 }
