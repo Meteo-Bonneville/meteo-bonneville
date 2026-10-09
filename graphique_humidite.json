@@ -1,6 +1,6 @@
 {
   "station": "IBONNE133",
-  "nombre_points": 91,
+  "nombre_points": 94,
   "donnees": [
     {
       "heure": "2026-10-09 00:04:56",
@@ -365,6 +365,18 @@
     {
       "heure": "2026-10-09 07:34:50",
       "humidite": 84.9
+    },
+    {
+      "heure": "2026-10-09 07:39:51",
+      "humidite": 84.9
+    },
+    {
+      "heure": "2026-10-09 07:44:51",
+      "humidite": 86.1
+    },
+    {
+      "heure": "2026-10-09 07:49:51",
+      "humidite": 86.6
     }
   ]
 }
