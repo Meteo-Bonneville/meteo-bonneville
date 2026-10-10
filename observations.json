@@ -1,5 +1,5 @@
 {
-    "date": "2026-10-10 11:36:14",
+    "date": "2026-10-10 11:38:14",
     "temperature": 14.2,
     "temp_max_jour": 13.5,
     "heure_temp_max": "11:19",
@@ -7,14 +7,14 @@
     "temp_min_jour": 10.5,
     "humidite": 73.4,
     "pression": 1019.3,
-    "vent": 6.8,
-    "rafale": 7.2,
+    "vent": 5.1,
+    "rafale": 5.1,
     "rafale_max_jour": 27.7,
     "heure_rafale_max": "07:44",
-    "direction": 72,
+    "direction": 89,
     "point_rosee": 8.9,
     "pluie_h": 0.0,
     "pluie_totale": 3.56,
-    "uv": 2.0,
-    "rayonnement": 269.4
+    "uv": 1.0,
+    "rayonnement": 244.5
 }
