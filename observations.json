@@ -1,8 +1,8 @@
 {
-    "date": "2026-10-17 00:55:15",
+    "date": "2026-10-17 00:56:15",
     "temperature": 10.2,
-    "temp_max_jour": 9.9,
-    "heure_temp_max": "00:04",
+    "temp_max_jour": 10.0,
+    "heure_temp_max": "00:54",
     "heure_temp_min": "00:24",
     "temp_min_jour": 9.0,
     "humidite": 73.4,
