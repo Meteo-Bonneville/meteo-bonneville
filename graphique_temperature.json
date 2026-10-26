@@ -1,6 +1,6 @@
 {
   "station": "IBONNE133",
-  "nombre_points": 162,
+  "nombre_points": 166,
   "donnees": [
     {
       "heure": "2026-10-26 00:04:50",
@@ -811,6 +811,26 @@
       "heure": "2026-10-26 13:29:53",
       "temperature": 11.5,
       "point_rosee": 5.7
+    },
+    {
+      "heure": "2026-10-26 13:34:54",
+      "temperature": 11.6,
+      "point_rosee": 6.0
+    },
+    {
+      "heure": "2026-10-26 13:39:55",
+      "temperature": 11.9,
+      "point_rosee": 6.0
+    },
+    {
+      "heure": "2026-10-26 13:44:55",
+      "temperature": 11.7,
+      "point_rosee": 6.0
+    },
+    {
+      "heure": "2026-10-26 13:49:55",
+      "temperature": 11.6,
+      "point_rosee": 6.1
     }
   ]
 }
