@@ -1,11 +1,11 @@
 {
-    "date": "2026-11-05 22:16:25",
+    "date": "2026-11-05 22:18:20",
     "temperature": 6.9,
     "temp_max_jour": 10.2,
     "heure_temp_max": "13:38",
     "heure_temp_min": "05:52",
     "temp_min_jour": 5.1,
-    "humidite": 97.0,
+    "humidite": 98.0,
     "pression": 1019.6,
     "vent": 0.0,
     "rafale": 0.0,
