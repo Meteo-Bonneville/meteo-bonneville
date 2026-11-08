@@ -730,8 +730,133 @@
     "point_rosee": 6.5
   },
   {
-    "heure": "2026-11-07 02:44:59",
+    "heure": "2026-11-07 02:59:59",
     "temperature": 7.5,
     "point_rosee": 6.5
+  },
+  {
+    "heure": "2026-11-07 03:59:48",
+    "temperature": 7.2,
+    "point_rosee": 6.4
+  },
+  {
+    "heure": "2026-11-07 04:59:49",
+    "temperature": 7.0,
+    "point_rosee": 6.3
+  },
+  {
+    "heure": "2026-11-07 05:59:50",
+    "temperature": 6.1,
+    "point_rosee": 5.7
+  },
+  {
+    "heure": "2026-11-07 06:59:50",
+    "temperature": 5.8,
+    "point_rosee": 5.4
+  },
+  {
+    "heure": "2026-11-07 07:59:51",
+    "temperature": 6.0,
+    "point_rosee": 5.6
+  },
+  {
+    "heure": "2026-11-07 08:59:52",
+    "temperature": 6.2,
+    "point_rosee": 5.6
+  },
+  {
+    "heure": "2026-11-07 09:59:52",
+    "temperature": 7.3,
+    "point_rosee": 6.0
+  },
+  {
+    "heure": "2026-11-07 10:59:53",
+    "temperature": 8.7,
+    "point_rosee": 6.4
+  },
+  {
+    "heure": "2026-11-07 11:59:53",
+    "temperature": 10.1,
+    "point_rosee": 6.4
+  },
+  {
+    "heure": "2026-11-07 12:59:54",
+    "temperature": 11.0,
+    "point_rosee": 6.0
+  },
+  {
+    "heure": "2026-11-07 13:59:55",
+    "temperature": 10.9,
+    "point_rosee": 5.8
+  },
+  {
+    "heure": "2026-11-07 14:59:58",
+    "temperature": 11.4,
+    "point_rosee": 5.8
+  },
+  {
+    "heure": "2026-11-07 15:59:59",
+    "temperature": 11.4,
+    "point_rosee": 5.7
+  },
+  {
+    "heure": "2026-11-07 16:59:59",
+    "temperature": 10.8,
+    "point_rosee": 6.1
+  },
+  {
+    "heure": "2026-11-07 17:59:59",
+    "temperature": 9.1,
+    "point_rosee": 6.6
+  },
+  {
+    "heure": "2026-11-07 18:59:48",
+    "temperature": 7.3,
+    "point_rosee": 6.2
+  },
+  {
+    "heure": "2026-11-07 19:59:48",
+    "temperature": 5.9,
+    "point_rosee": 5.4
+  },
+  {
+    "heure": "2026-11-07 20:59:50",
+    "temperature": 4.8,
+    "point_rosee": 4.6
+  },
+  {
+    "heure": "2026-11-07 21:59:49",
+    "temperature": 4.0,
+    "point_rosee": 3.8
+  },
+  {
+    "heure": "2026-11-07 22:59:51",
+    "temperature": 3.5,
+    "point_rosee": 3.3
+  },
+  {
+    "heure": "2026-11-07 23:59:52",
+    "temperature": 3.1,
+    "point_rosee": 2.9
+  },
+  {
+    "heure": "2026-11-08 00:59:52",
+    "temperature": 2.3,
+    "point_rosee": 2.1
+  },
+  {
+    "heure": "2026-11-08 01:59:53",
+    "temperature": 1.4,
+    "point_rosee": 1.2
+  },
+  {
+    "heure": "2026-11-08 02:59:53",
+    "temperature": 1.6,
+    "point_rosee": 1.4
+  },
+  {
+    "heure": "2026-11-08 03:39:55",
+    "temperature": 2.6,
+    "point_rosee": 2.4
   }
 ]
