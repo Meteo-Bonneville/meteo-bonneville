@@ -1,12 +1,12 @@
 {
   "periode_debut": "20261101",
-  "periode_fin": "20261107",
-  "nombre_releves": 147,
+  "periode_fin": "20261108",
+  "nombre_releves": 172,
   "temperature_min": 0.8,
   "date_temperature_min": "2026-11-02",
   "temperature_max": 12.6,
   "date_temperature_max": "2026-11-01",
   "rafale_max": 54.4,
   "date_rafale_max": "2026-11-01",
-  "pluie_cumulee": 13.47
+  "pluie_cumulee": 13.72
 }
