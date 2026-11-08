@@ -1,6 +1,6 @@
 {
-    "date": "2026-11-08 07:20:40",
-    "temperature": 0.8,
+    "date": "2026-11-08 07:22:24",
+    "temperature": 0.7,
     "temp_max_jour": 3.2,
     "heure_temp_max": "00:02",
     "heure_temp_min": "06:56",
@@ -16,5 +16,5 @@
     "pluie_h": 0.0,
     "pluie_totale": 0.2,
     "uv": 0.0,
-    "rayonnement": 2.8
+    "rayonnement": 3.2
 }
