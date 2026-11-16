@@ -3014,6 +3014,31 @@ window.afficherArchiveMois = async function(event, periode) {
 
         const titre = nomsMois[bilan.mois] + " " + bilan.annee;
 
+        let cumulPluie = bilan.pluie_totale;
+        let libellePluie = "Cumul des journées archivées";
+        const moisEnCours = new Intl.DateTimeFormat("sv-SE", {
+            timeZone: "Europe/Paris", year: "numeric", month: "2-digit"
+        }).format(new Date());
+
+        if (periode === moisEnCours) {
+            try {
+                const r = await fetch("historique_mois.json?t=" + Date.now());
+                if (r.ok) {
+                    const d = await r.json();
+                    const date = String(d.periode_fin);
+                    if (/^[0-9]{8}$/.test(date) &&
+                        date.slice(0, 6) === periode.replace("-", "") &&
+                        Number.isFinite(d.pluie_cumulee)) {
+                        cumulPluie = d.pluie_cumulee.toFixed(2);
+                        libellePluie = "Cumul du mois au " + date.slice(6) + "/" + date.slice(4, 6);
+                    }
+                }
+            } catch (erreur) {
+                console.warn("Historique mensuel indisponible", erreur);
+            }
+        }
+
+
         function dateFR(date) {
             if (!date) return "—";
             const [annee, mois, jour] = date.split("-");
@@ -3084,7 +3109,7 @@ window.afficherArchiveMois = async function(event, periode) {
 
                 <div class="carte">
                     <h3>🌧️ Pluie</h3>
-                    <p>Cumul du mois : <strong>${bilan.pluie_totale} mm</strong></p>
+                    <p>${libellePluie} : <strong>${cumulPluie} mm</strong></p>
 
                     <p>Journée la plus arrosée :
                     <strong>${bilan.pluie_jour_max} mm</strong><br>
