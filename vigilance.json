@@ -3,7 +3,8 @@
     "departement": "Haute-Savoie (74)",
     "alertes": [
       "🟡 vent — Vigilance jaune",
-      "🟡 avalanches — Vigilance jaune"
+      "🟡 avalanches — Vigilance jaune",
+      "🟡 pluie — Vigilance jaune"
     ]
   },
   "vigicrues": {
@@ -11,5 +12,5 @@
     "symbole": "🟢",
     "texte": "Vigilance verte"
   },
-  "mise_a_jour": "18/11/2026 17:25"
+  "mise_a_jour": "18/11/2026 17:30"
 }
