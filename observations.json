@@ -1,5 +1,5 @@
 {
-    "date": "2026-11-19 13:20:26",
+    "date": "2026-11-19 13:30:37",
     "temperature": 9.7,
     "temp_max_jour": 12.9,
     "heure_temp_max": "01:50",
@@ -7,16 +7,16 @@
     "temp_min_jour": 7.5,
     "humidite": 78.0,
     "pression": 1002.7,
-    "vent": 8.2,
-    "rafale": 9.0,
+    "vent": 5.8,
+    "rafale": 6.8,
     "rafale_max_jour": 13.8,
     "heure_rafale_max": "09:00",
-    "direction": 132.0,
+    "direction": 81.0,
     "point_rosee": 6.0,
     "pluie_h": 0.0,
     "pluie_totale": 20.1,
     "uv": 0.0,
-    "rayonnement": 105.3,
-    "observation_epoch": 1795090826,
+    "rayonnement": 82.1,
+    "observation_epoch": 1795091437,
     "source": "Weather Underground"
 }
