@@ -9,8 +9,8 @@
   },
   "vigicrues": {
     "secteur": "Arve aval / Bonneville",
-    "symbole": "🟢",
-    "texte": "Vigilance verte"
+    "symbole": "🟡",
+    "texte": "Vigilance jaune"
   },
-  "mise_a_jour": "22/11/2026 15:55"
+  "mise_a_jour": "22/11/2026 16:01"
 }
