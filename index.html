@@ -1906,7 +1906,18 @@ async function chargerGaleriePhotos() {
     if (!r.ok) throw new Error("HTTP " + r.status);
 
     const data = await r.json();
-    const photos = (data.resources || []).slice().sort((a,b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+    const maintenant = Date.now();
+    const photos = (data.resources || []).filter(photo => {
+      const expiration = new Date(photo.created_at);
+      if (!Number.isFinite(expiration.getTime())) return true;
+
+      const jour = expiration.getUTCDate();
+      expiration.setUTCMonth(expiration.getUTCMonth() + 3);
+      // Si le mois cible est plus court, retenir son dernier jour.
+      if (expiration.getUTCDate() !== jour) expiration.setUTCDate(0);
+
+      return expiration.getTime() > maintenant;
+    }).sort((a,b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
 
     // Compteur de nouvelles photos pour ce visiteur
     const dernierePhoto =
