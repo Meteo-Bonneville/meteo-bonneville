@@ -1,5 +1,5 @@
 {
-    "date": "2026-11-27 11:00:30",
+    "date": "2026-11-27 11:10:30",
     "temperature": 5.2,
     "temp_max_jour": 5.6,
     "heure_temp_max": "10:50",
@@ -11,12 +11,12 @@
     "rafale": 0.0,
     "rafale_max_jour": 7.1,
     "heure_rafale_max": "04:00",
-    "direction": 336.0,
+    "direction": 0.0,
     "point_rosee": 2.2,
     "pluie_h": 0.0,
     "pluie_totale": 0.0,
     "uv": 0.0,
-    "rayonnement": 145.2,
-    "observation_epoch": 1795773630,
+    "rayonnement": 140.3,
+    "observation_epoch": 1795774230,
     "source": "Weather Underground"
 }
